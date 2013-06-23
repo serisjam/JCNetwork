@@ -1,0 +1,249 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		39DB2D1F1776940700EFE81D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39DB2D1E1776940700EFE81D /* Foundation.framework */; };
+		39DB2D241776940700EFE81D /* JCNetwork.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 39DB2D231776940700EFE81D /* JCNetwork.h */; };
+		39DB2D261776940700EFE81D /* JCNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 39DB2D251776940700EFE81D /* JCNetwork.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		39DB2D191776940700EFE81D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				39DB2D241776940700EFE81D /* JCNetwork.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		39DB2D1B1776940700EFE81D /* libJCNetwork.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJCNetwork.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		39DB2D1E1776940700EFE81D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		39DB2D221776940700EFE81D /* JCNetwork-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JCNetwork-Prefix.pch"; sourceTree = "<group>"; };
+		39DB2D231776940700EFE81D /* JCNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCNetwork.h; sourceTree = "<group>"; };
+		39DB2D251776940700EFE81D /* JCNetwork.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCNetwork.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		39DB2D181776940700EFE81D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				39DB2D1F1776940700EFE81D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		39DB2D121776940700EFE81D = {
+			isa = PBXGroup;
+			children = (
+				39DB2D201776940700EFE81D /* JCNetwork */,
+				39DB2D1D1776940700EFE81D /* Frameworks */,
+				39DB2D1C1776940700EFE81D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		39DB2D1C1776940700EFE81D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				39DB2D1B1776940700EFE81D /* libJCNetwork.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		39DB2D1D1776940700EFE81D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				39DB2D1E1776940700EFE81D /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		39DB2D201776940700EFE81D /* JCNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				39DB2D231776940700EFE81D /* JCNetwork.h */,
+				39DB2D251776940700EFE81D /* JCNetwork.m */,
+				39DB2D211776940700EFE81D /* Supporting Files */,
+			);
+			path = JCNetwork;
+			sourceTree = "<group>";
+		};
+		39DB2D211776940700EFE81D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				39DB2D221776940700EFE81D /* JCNetwork-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		39DB2D1A1776940700EFE81D /* JCNetwork */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 39DB2D291776940700EFE81D /* Build configuration list for PBXNativeTarget "JCNetwork" */;
+			buildPhases = (
+				39DB2D171776940700EFE81D /* Sources */,
+				39DB2D181776940700EFE81D /* Frameworks */,
+				39DB2D191776940700EFE81D /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JCNetwork;
+			productName = JCNetwork;
+			productReference = 39DB2D1B1776940700EFE81D /* libJCNetwork.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		39DB2D131776940700EFE81D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = Jam;
+			};
+			buildConfigurationList = 39DB2D161776940700EFE81D /* Build configuration list for PBXProject "JCNetwork" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 39DB2D121776940700EFE81D;
+			productRefGroup = 39DB2D1C1776940700EFE81D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				39DB2D1A1776940700EFE81D /* JCNetwork */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		39DB2D171776940700EFE81D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				39DB2D261776940700EFE81D /* JCNetwork.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		39DB2D271776940700EFE81D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		39DB2D281776940700EFE81D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		39DB2D2A1776940700EFE81D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/JCNetwork.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "JCNetwork/JCNetwork-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		39DB2D2B1776940700EFE81D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/JCNetwork.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "JCNetwork/JCNetwork-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		39DB2D161776940700EFE81D /* Build configuration list for PBXProject "JCNetwork" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				39DB2D271776940700EFE81D /* Debug */,
+				39DB2D281776940700EFE81D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		39DB2D291776940700EFE81D /* Build configuration list for PBXNativeTarget "JCNetwork" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				39DB2D2A1776940700EFE81D /* Debug */,
+				39DB2D2B1776940700EFE81D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 39DB2D131776940700EFE81D /* Project object */;
+}
