@@ -52,7 +52,7 @@
     MKNetworkOperation *operation = [item operation];
     
     [self cancelRequest:requestID];
-    
+
     [operation addCompletionHandler:^(MKNetworkOperation* completedOperation){
         DLog(@"commplete finish");
         [_dispatchTable setObject:item forKey:[NSNumber numberWithInt:requestID]];
@@ -134,6 +134,8 @@
 {
     if (service) {
         MKNetworkEngine *JCengine = [[MKNetworkEngine alloc] initWithHostName:[service hostName]];
+        // use Cache 
+        [JCengine useCache];
         return JCengine;
     }
     

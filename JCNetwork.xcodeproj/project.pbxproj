@@ -33,6 +33,7 @@
 		39DB2D2F177694C100EFE81D /* JCRequestProxy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 39DB2D2C1776946200EFE81D /* JCRequestProxy.h */; };
 		39DB2D4C1776AAFB00EFE81D /* JCBaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = 39DB2D4B1776AAFB00EFE81D /* JCBaseService.m */; };
 		39DB2D531776AC4100EFE81D /* JCZhaofangtongService.m in Sources */ = {isa = PBXBuildFile; fileRef = 39DB2D521776AC4100EFE81D /* JCZhaofangtongService.m */; };
+		39FF0F2B1777DF1600E99B25 /* JCHouseService.m in Sources */ = {isa = PBXBuildFile; fileRef = 39FF0F2A1777DF1600E99B25 /* JCHouseService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -97,6 +98,8 @@
 		39DB2D501776AB6200EFE81D /* JCNetworkDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCNetworkDefine.h; sourceTree = "<group>"; };
 		39DB2D511776AC4100EFE81D /* JCZhaofangtongService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCZhaofangtongService.h; sourceTree = "<group>"; };
 		39DB2D521776AC4100EFE81D /* JCZhaofangtongService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCZhaofangtongService.m; sourceTree = "<group>"; };
+		39FF0F291777DF1600E99B25 /* JCHouseService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHouseService.h; sourceTree = "<group>"; };
+		39FF0F2A1777DF1600E99B25 /* JCHouseService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHouseService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +244,8 @@
 				399491FA1776B3DF003C3A7B /* JCServiceHeader.h */,
 				39DB2D4A1776AAFB00EFE81D /* JCBaseService.h */,
 				39DB2D4B1776AAFB00EFE81D /* JCBaseService.m */,
+				39FF0F291777DF1600E99B25 /* JCHouseService.h */,
+				39FF0F2A1777DF1600E99B25 /* JCHouseService.m */,
 				39DB2D511776AC4100EFE81D /* JCZhaofangtongService.h */,
 				39DB2D521776AC4100EFE81D /* JCZhaofangtongService.m */,
 			);
@@ -316,6 +321,7 @@
 				399492671776B7A4003C3A7B /* JCOperationResponse.m in Sources */,
 				399492681776B7A4003C3A7B /* JCRequester.m in Sources */,
 				3994926B1776B7EC003C3A7B /* JCNetworkResponse.m in Sources */,
+				39FF0F2B1777DF1600E99B25 /* JCHouseService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,22 +1,22 @@
 //
-//  JCZhaofangtongService.m
+//  JCHouseService.m
 //  JCNetwork
 //
-//  Created by Jam on 13-6-23.
+//  Created by Jam on 13-6-24.
 //  Copyright (c) 2013年 Jam. All rights reserved.
 //
 
-#import "JCZhaofangtongService.h"
+#import "JCHouseService.h"
 
-@implementation JCZhaofangtongService
+@implementation JCHouseService
 
 - (id)init
 {
     self = [super init];
     
     if (self) {
-        _serviceID = JCZhaofangtongServiceID;
-        _apiName = @"i-zhaofangtong";
+        _serviceID = JCHouseServiceID;
+        _apiName = @"i-139house";
         _apiVersion = @"1.0";
         
 #ifdef DEBUG
