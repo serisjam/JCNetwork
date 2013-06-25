@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		398F3955177961E100AA15CA /* JCImageService.m in Sources */ = {isa = PBXBuildFile; fileRef = 398F3954177961E100AA15CA /* JCImageService.m */; };
+		398F395A17796AAF00AA15CA /* JCEstateBookService.m in Sources */ = {isa = PBXBuildFile; fileRef = 398F395917796AAF00AA15CA /* JCEstateBookService.m */; };
 		399491FF1776B48C003C3A7B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 399491FE1776B48C003C3A7B /* CFNetwork.framework */; };
 		399492011776B493003C3A7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 399492001776B493003C3A7B /* Security.framework */; };
 		399492031776B49B003C3A7B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 399492021776B49B003C3A7B /* SystemConfiguration.framework */; };
@@ -52,6 +54,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		398F3953177961E100AA15CA /* JCImageService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCImageService.h; sourceTree = "<group>"; };
+		398F3954177961E100AA15CA /* JCImageService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCImageService.m; sourceTree = "<group>"; };
+		398F395817796AAF00AA15CA /* JCEstateBookService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCEstateBookService.h; sourceTree = "<group>"; };
+		398F395917796AAF00AA15CA /* JCEstateBookService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCEstateBookService.m; sourceTree = "<group>"; };
 		399491FA1776B3DF003C3A7B /* JCServiceHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCServiceHeader.h; sourceTree = "<group>"; };
 		399491FE1776B48C003C3A7B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		399492001776B493003C3A7B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -244,10 +250,14 @@
 				399491FA1776B3DF003C3A7B /* JCServiceHeader.h */,
 				39DB2D4A1776AAFB00EFE81D /* JCBaseService.h */,
 				39DB2D4B1776AAFB00EFE81D /* JCBaseService.m */,
+				398F3953177961E100AA15CA /* JCImageService.h */,
+				398F3954177961E100AA15CA /* JCImageService.m */,
 				39FF0F291777DF1600E99B25 /* JCHouseService.h */,
 				39FF0F2A1777DF1600E99B25 /* JCHouseService.m */,
 				39DB2D511776AC4100EFE81D /* JCZhaofangtongService.h */,
 				39DB2D521776AC4100EFE81D /* JCZhaofangtongService.m */,
+				398F395817796AAF00AA15CA /* JCEstateBookService.h */,
+				398F395917796AAF00AA15CA /* JCEstateBookService.m */,
 			);
 			path = Products;
 			sourceTree = "<group>";
@@ -322,6 +332,8 @@
 				399492681776B7A4003C3A7B /* JCRequester.m in Sources */,
 				3994926B1776B7EC003C3A7B /* JCNetworkResponse.m in Sources */,
 				39FF0F2B1777DF1600E99B25 /* JCHouseService.m in Sources */,
+				398F3955177961E100AA15CA /* JCImageService.m in Sources */,
+				398F395A17796AAF00AA15CA /* JCEstateBookService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

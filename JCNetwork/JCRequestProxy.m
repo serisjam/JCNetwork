@@ -56,12 +56,16 @@
     }
     
     id service = [_serviceDict objectForKey:[NSNumber numberWithInt:serviceID]];
-    
-    if ([[service getAllMethods] indexOfObject:methodName] == NSNotFound) {
+    //因为找房通地产说API接口占时不是我们维护，先关闭验证
+    if ([[service getAllMethods] indexOfObject:methodName] == NSNotFound && serviceID != JCEstateBookServiceID) {
         return JC_ERROR_REQUESTID;
     }
-    
     return [_requester httpPostRquest:[service buildPathWithMethod:methodName] service:serviceID params:params target:target action:action];
+}
+
+- (void)autoLoadImageWithURL:(NSURL *)imageURL placeHolderImage:(UIImage *)image toImageView:(UIImageView *)imageView
+{
+    [_requester autoLoadImageWithURL:imageURL placeHolderImage:image toImageView:imageView];
 }
 
 - (void)cancelRequest:(JCRequestID)requestID

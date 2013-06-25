@@ -207,7 +207,7 @@ static NSOperationQueue *_sharedNetworkQueue;
 {
   if([self.reachability currentReachabilityStatus] == ReachableViaWiFi)
   {
-    DLog(@"Server [%@] is reachable via Wifi", self.hostName);
+    //DLog(@"Server [%@] is reachable via Wifi", self.hostName);
     [_sharedNetworkQueue setMaxConcurrentOperationCount:6];
     
     [self checkAndRestoreFrozenOperations];
@@ -216,17 +216,17 @@ static NSOperationQueue *_sharedNetworkQueue;
   {
     if(self.wifiOnlyMode) {
       
-      DLog(@" Disabling engine as server [%@] is reachable only via cellular data.", self.hostName);
+      //DLog(@" Disabling engine as server [%@] is reachable only via cellular data.", self.hostName);
       [_sharedNetworkQueue setMaxConcurrentOperationCount:0];
     } else {
-      DLog(@"Server [%@] is reachable only via cellular data", self.hostName);
+      //DLog(@"Server [%@] is reachable only via cellular data", self.hostName);
       [_sharedNetworkQueue setMaxConcurrentOperationCount:2];
       [self checkAndRestoreFrozenOperations];
     }
   }
   else if([self.reachability currentReachabilityStatus] == NotReachable)
   {
-    DLog(@"Server [%@] is not reachable", self.hostName);
+    //DLog(@"Server [%@] is not reachable", self.hostName);
     [self freezeOperations];
   }
   

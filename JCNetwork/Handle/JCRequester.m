@@ -36,6 +36,13 @@
     return self;
 }
 
+- (void)autoLoadImageWithURL:(NSURL *)imageURL placeHolderImage:(UIImage *)image toImageView:(UIImageView *)imageView
+{
+    MKNetworkEngine *engine = [_servicesRequestEngine objectForKey:[NSNumber numberWithInt:JCImageServiceID]];
+    [UIImageView setDefaultEngine:engine];
+    [imageView setImageFromURL:imageURL placeHolderImage:image];
+}
+
 - (JCRequestID)httpGetRquest:(NSString *)path service:(JCServiceType)serviceID params:(NSDictionary *)params target:(id)target action:(SEL)action
 {
     if (++_lastRequestID >= JC_MAX_REQUESTID) {

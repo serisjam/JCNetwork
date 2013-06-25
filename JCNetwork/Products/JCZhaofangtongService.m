@@ -44,7 +44,7 @@
                             @"upload.ashx",
                             
                             //upgrade
-                            @"updrade.ashx",
+                            @"update.ashx",
                             
                             //search
                             @"search.ashx",

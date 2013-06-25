@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "JCNetworkDefine.h"
+#import "JCNetworkResponse.h"
 
 @class JCRequester;     // 前向声明
 
@@ -25,6 +26,8 @@
 - (JCRequestID)httpGetWithServiceID:(JCServiceType)serviceID methodName:(NSString *)methodName params:(NSDictionary *)params target:(id)target action:(SEL)action;
 //POST请求
 - (JCRequestID)httpPostWithServiceID:(JCServiceType)serviceID methodName:(NSString *)methodName params:(NSDictionary *)params target:(id)target action:(SEL)action;
+//Image请求
+- (void)autoLoadImageWithURL:(NSURL *)imageURL placeHolderImage:(UIImage*)image toImageView:(UIImageView *)imageView;
 
 // 根据请求ID取消一个请求
 - (void)cancelRequest:(JCRequestID)requestID;
