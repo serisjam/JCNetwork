@@ -27,8 +27,8 @@
     
     if (self) {
         _dispatcher = [JCDispatcher sharedInstance];
-        _servicesRequestEngine = [[JCDispatcher sharedInstance] servicesRequestEngine];
         _serviceDict = [[JCDispatcher sharedInstance] serviceDict];
+        _servicesRequestEngine = [[NSMutableDictionary alloc] initWithCapacity:[SERVICES count]];
         
         _lastRequestID = JC_MIN_REQUESTID;
     }
@@ -38,6 +38,9 @@
 
 - (void)autoLoadImageWithURL:(NSURL *)imageURL placeHolderImage:(UIImage *)image toImageView:(UIImageView *)imageView
 {
+    if ([[_servicesRequestEngine allKeys] indexOfObject:[NSNumber numberWithInt:JCImageServiceID]] == NSNotFound) {
+        [_servicesRequestEngine setObject:[_dispatcher createRequestQueueWith:[_serviceDict objectForKey:[NSNumber numberWithInt:JCImageServiceID]]] forKey:[NSNumber numberWithInt:JCImageServiceID]];
+    }
     MKNetworkEngine *engine = [_servicesRequestEngine objectForKey:[NSNumber numberWithInt:JCImageServiceID]];
     [UIImageView setDefaultEngine:engine];
     [imageView setImageFromURL:imageURL placeHolderImage:image];
@@ -50,6 +53,9 @@
     }
     
     //get different products MKNetworkEngine queue
+    if ([[_servicesRequestEngine allKeys] indexOfObject:[NSNumber numberWithInt:serviceID]] == NSNotFound) {
+            [_servicesRequestEngine setObject:[_dispatcher createRequestQueueWith:[_serviceDict objectForKey:[NSNumber numberWithInt:serviceID]]] forKey:[NSNumber numberWithInt:serviceID]];
+    }
     MKNetworkEngine *engine = [_servicesRequestEngine objectForKey:[NSNumber numberWithInt:serviceID]];
     MKNetworkOperation *op = [engine operationWithPath:path params:params httpMethod:@"GET"];
     
@@ -73,6 +79,9 @@
     }
     
     //get different products MKNetworkEngine queue
+    if ([[_servicesRequestEngine allKeys] indexOfObject:[NSNumber numberWithInt:serviceID]] == NSNotFound) {
+        [_servicesRequestEngine setObject:[_dispatcher createRequestQueueWith:[_serviceDict objectForKey:[NSNumber numberWithInt:serviceID]]] forKey:[NSNumber numberWithInt:serviceID]];
+    }
     MKNetworkEngine *engine = [_servicesRequestEngine objectForKey:[NSNumber numberWithInt:serviceID]];
     MKNetworkOperation *op = [engine operationWithPath:path params:params httpMethod:@"POST"];
     
@@ -82,7 +91,6 @@
     [element setCallback:action];
     [element setServiceID:serviceID];
     [element setOperation:op];
-    
     [_dispatcher addDispatchItem:element];
     [engine enqueueOperation:op];
     DLog(@"%@", [op url]);

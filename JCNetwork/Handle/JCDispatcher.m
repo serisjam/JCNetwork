@@ -10,7 +10,6 @@
 
 @implementation JCDispatcher
 
-@synthesize servicesRequestEngine = _servicesRequestEngine;
 @synthesize serviceDict = _serviceDict;
 
 + (id)sharedInstance
@@ -30,15 +29,12 @@
     if (self) {
         _dispatchTable = [[NSMutableDictionary alloc] init];
         _serviceDict = [[NSMutableDictionary alloc] initWithCapacity:[SERVICES count]];
-        _servicesRequestEngine = [[NSMutableDictionary alloc] initWithCapacity:[SERVICES count]];
         
         for (id serviceName in SERVICES) {
             id service = [[NSClassFromString((NSString *)serviceName) alloc] init];
             if (!service)
                 continue;
             [_serviceDict setObject:service forKey:[NSNumber numberWithInt:[service serviceID]]];
-            //add products class and httprequest Queue
-            [_servicesRequestEngine setObject:[self createRequestQueueWith:service] forKey:[NSNumber numberWithInt:[service serviceID]]];
         }
     }
     

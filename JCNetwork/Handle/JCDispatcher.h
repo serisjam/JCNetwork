@@ -15,11 +15,9 @@
 @interface JCDispatcher : NSObject
 {
     NSMutableDictionary *_serviceDict;
-    NSMutableDictionary *_servicesRequestEngine;
     NSMutableDictionary *_dispatchTable;
 }
 
-@property (nonatomic, readonly) NSMutableDictionary *servicesRequestEngine;
 @property (nonatomic, readonly) NSMutableDictionary *serviceDict;
 
 + (id)sharedInstance;
@@ -32,5 +30,8 @@
 - (void)requestFailed:(JCOperationResponse *)operationResponse withError:(NSError *)error;
 
 - (void)dispatchResponse:(JCNetworkResponse *)response forElement:(DispatchElement *)element;
+
+//factory method
+- (MKNetworkEngine *)createRequestQueueWith:(JCBaseService *)service;
 
 @end

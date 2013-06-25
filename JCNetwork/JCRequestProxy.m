@@ -56,6 +56,7 @@
     }
     
     id service = [_serviceDict objectForKey:[NSNumber numberWithInt:serviceID]];
+    
     //因为找房通地产说API接口占时不是我们维护，先关闭验证
     if ([[service getAllMethods] indexOfObject:methodName] == NSNotFound && serviceID != JCEstateBookServiceID) {
         return JC_ERROR_REQUESTID;
