@@ -69,6 +69,20 @@
     [_requester autoLoadImageWithURL:imageURL placeHolderImage:image toImageView:imageView];
 }
 
+- (JCRequestID)uploadFileWithServiceID:(JCServiceType)serviceID methodName:(NSString *)methodName params:(NSDictionary *)params files:(NSDictionary *)files target:(id)target action:(SEL)action
+{
+    if (params && ![params isKindOfClass:[NSDictionary class]]) {
+        return JC_ERROR_REQUESTID;
+    }
+    
+    id service = [_serviceDict objectForKey:[NSNumber numberWithInt:serviceID]];
+    
+    //因为找房通地产说API接口占时不是我们维护，先关闭验证
+    if ([[service getAllMethods] indexOfObject:methodName] == NSNotFound && serviceID != JCEstateBookServiceID) {
+        return JC_ERROR_REQUESTID;
+    }
+}
+
 - (void)cancelRequest:(JCRequestID)requestID
 {
     [_requester cancelRequest:requestID];

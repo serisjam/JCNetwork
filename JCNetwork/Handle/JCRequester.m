@@ -42,6 +42,7 @@
         [_servicesRequestEngine setObject:[_dispatcher createRequestQueueWith:[_serviceDict objectForKey:[NSNumber numberWithInt:JCImageServiceID]]] forKey:[NSNumber numberWithInt:JCImageServiceID]];
     }
     MKNetworkEngine *engine = [_servicesRequestEngine objectForKey:[NSNumber numberWithInt:JCImageServiceID]];
+    
     [UIImageView setDefaultEngine:engine];
     [imageView setImageFromURL:imageURL placeHolderImage:image];
 }
@@ -84,6 +85,37 @@
     }
     MKNetworkEngine *engine = [_servicesRequestEngine objectForKey:[NSNumber numberWithInt:serviceID]];
     MKNetworkOperation *op = [engine operationWithPath:path params:params httpMethod:@"POST"];
+    
+    DispatchElement *element = [[DispatchElement alloc] init];
+    [element setRequestID:_lastRequestID];
+    [element setTarget:target];
+    [element setCallback:action];
+    [element setServiceID:serviceID];
+    [element setOperation:op];
+    [_dispatcher addDispatchItem:element];
+    [engine enqueueOperation:op];
+    DLog(@"%@", [op url]);
+    return _lastRequestID;
+}
+
+- (JCRequestID)httpPost:(NSString *)path params:(NSDictionary *)params files:(NSDictionary *)files serivce:(JCServiceType)serviceID target:(id)target action:(SEL)action
+{
+    if (++_lastRequestID >= JC_MAX_REQUESTID) {
+        _lastRequestID = JC_MIN_REQUESTID;
+    }
+    
+    //get different products MKNetworkEngine queue
+    if ([[_servicesRequestEngine allKeys] indexOfObject:[NSNumber numberWithInt:serviceID]] == NSNotFound) {
+        [_servicesRequestEngine setObject:[_dispatcher createRequestQueueWith:[_serviceDict objectForKey:[NSNumber numberWithInt:serviceID]]] forKey:[NSNumber numberWithInt:serviceID]];
+    }
+    
+    MKNetworkEngine *engine = [_servicesRequestEngine objectForKey:[NSNumber numberWithInt:serviceID]];
+    MKNetworkOperation *op = [engine operationWithPath:path params:params httpMethod:@"POST"];
+    
+    NSArray *keys = [files allKeys];
+    for (NSString *item in keys) {
+        [op addFile:[files objectForKey:item] forKey:item];
+    }
     
     DispatchElement *element = [[DispatchElement alloc] init];
     [element setRequestID:_lastRequestID];
