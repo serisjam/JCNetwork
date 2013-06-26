@@ -66,6 +66,26 @@
     }];
 }
 
+- (DispatchElement *)getDispatchElement:(JCRequestID)requestID
+{
+    id dispatchOperation = [_dispatchTable objectForKey:[NSNumber numberWithInt:requestID]];
+    
+    if (dispatchOperation) {
+        return dispatchOperation;
+    }
+    return nil;
+}
+
+- (void)onUploadDispatchItem:(DispatchElement *)item
+{
+    id target = [item target];
+    SEL callback = [item callback];
+    
+    [[item operation] onUploadProgressChanged:^(double progress){
+        [target performSelector:callback withObject:[NSNumber numberWithFloat:progress]];
+    }];
+}
+
 - (void)cancelRequest:(JCRequestID)requestID
 {
     id dispatchOperation = [_dispatchTable objectForKey:[NSNumber numberWithInt:requestID]];

@@ -30,6 +30,7 @@
 - (JCRequestID)httpPostRquest:(NSString *)path service:(JCServiceType)serviceID params:(NSDictionary *)params target:(id)target action:(SEL)action;
 //upload
 - (JCRequestID)httpPost:(NSString *)path params:(NSDictionary *)params files:(NSDictionary *)files serivce:(JCServiceType)serviceID target:(id)target action:(SEL)action;
+- (void)onUploadProgressChanged:(JCRequestID)requestID target:(id)target action:(SEL)action;
 
 - (void)cancelRequest:(JCRequestID)requestID;
 

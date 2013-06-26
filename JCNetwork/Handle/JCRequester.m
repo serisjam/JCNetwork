@@ -129,6 +129,20 @@
     return _lastRequestID;
 }
 
+- (void)onUploadProgressChanged:(JCRequestID)requestID target:(id)target action:(SEL)action
+{
+    DispatchElement *item = [_dispatcher getDispatchElement:requestID];
+    if (item) {
+        DispatchElement *element = [[DispatchElement alloc] init];
+        [element setRequestID:requestID];
+        [element setTarget:target];
+        [element setCallback:action];
+        [element setOperation:[item operation]];
+        [_dispatcher onUploadDispatchItem:element];
+    }
+    DLog(@"requestID invalid");
+}
+
 - (void)cancelRequest:(JCRequestID)requestID
 {
     [_dispatcher cancelRequest:requestID];

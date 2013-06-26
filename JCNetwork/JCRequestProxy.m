@@ -81,6 +81,13 @@
     if ([[service getAllMethods] indexOfObject:methodName] == NSNotFound && serviceID != JCEstateBookServiceID) {
         return JC_ERROR_REQUESTID;
     }
+    
+    return [_requester httpPost:[service buildPathWithMethod:methodName] params:params files:files serivce:serviceID target:target action:action];
+}
+
+- (void)onUploadProgressChanged:(JCRequestID)requestID target:(id)target action:(SEL)action
+{
+    [_requester onUploadProgressChanged:requestID target:target action:action];
 }
 
 - (void)cancelRequest:(JCRequestID)requestID
