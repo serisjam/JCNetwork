@@ -32,6 +32,9 @@
 - (JCRequestID)uploadFileWithServiceID:(JCServiceType)serviceID methodName:(NSString *)methodName params:(NSDictionary *)params files:(NSDictionary *)files target:(id)target action:(SEL)action;
 //upload上传进度根据上传返回的requestID
 - (void)onUploadProgressChanged:(JCRequestID)requestID target:(id)target action:(SEL)action;
+//download 请求
+- (JCRequestID)downloadFileFrom:(NSString*)remoteURL toFile:(NSString*)filePath target:(id)target action:(SEL)action;
+- (void)onDownloadProgressChanged:(JCRequestID)requestID target:(id)target action:(SEL)action;
 
 // 根据请求ID取消一个请求
 - (void)cancelRequest:(JCRequestID)requestID;

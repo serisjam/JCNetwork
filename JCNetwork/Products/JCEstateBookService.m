@@ -20,8 +20,8 @@
             _apiVersion = @"1.0";
             
 #ifdef DEBUG
-            _hostName = @"dcs.zhaofangtong.com";
-            _path = @"AppDataAccess/";
+        _hostName = @"dcs.zhaofangtong.com";
+        _path = @"AppDataAccess/";
 #else
             _hostName = @"dcs.zhaofangtong.com";
             _path = @"AppDataAccess/";

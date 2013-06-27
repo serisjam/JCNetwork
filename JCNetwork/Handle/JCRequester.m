@@ -36,6 +36,7 @@
     return self;
 }
 
+#pragma mark request Handle
 - (void)autoLoadImageWithURL:(NSURL *)imageURL placeHolderImage:(UIImage *)image toImageView:(UIImageView *)imageView
 {
     if ([[_servicesRequestEngine allKeys] indexOfObject:[NSNumber numberWithInt:JCImageServiceID]] == NSNotFound) {
@@ -132,6 +133,7 @@
 - (void)onUploadProgressChanged:(JCRequestID)requestID target:(id)target action:(SEL)action
 {
     DispatchElement *item = [_dispatcher getDispatchElement:requestID];
+    
     if (item) {
         DispatchElement *element = [[DispatchElement alloc] init];
         [element setRequestID:requestID];
@@ -139,14 +141,63 @@
         [element setCallback:action];
         [element setOperation:[item operation]];
         [_dispatcher onUploadDispatchItem:element];
+        return;
     }
     DLog(@"requestID invalid");
 }
+
+- (JCRequestID)httpGet:(NSString*)remoteURL toFile:(NSString*)filePath target:(id)target action:(SEL)action
+{
+    if (++_lastRequestID >= JC_MAX_REQUESTID) {
+        _lastRequestID = JC_MIN_REQUESTID;
+    }
+    
+    if ([[_servicesRequestEngine allKeys] indexOfObject:[NSNumber numberWithInt:JCDownLoadServiceID]] == NSNotFound) {
+        [_servicesRequestEngine setObject:[_dispatcher createRequestQueueWith:[_serviceDict objectForKey:[NSNumber numberWithInt:JCDownLoadServiceID]]] forKey:[NSNumber numberWithInt:JCDownLoadServiceID]];
+    }
+    
+    MKNetworkEngine *engine = [_servicesRequestEngine objectForKey:[NSNumber numberWithInt:JCDownLoadServiceID]];
+    MKNetworkOperation *op = [engine operationWithURLString:remoteURL];
+    [op setFreezable:YES];
+    [op addDownloadStream:[NSOutputStream outputStreamToFileAtPath:filePath append:YES]];
+    
+    DispatchElement *element = [[DispatchElement alloc] init];
+    [element setRequestID:_lastRequestID];
+    [element setTarget:target];
+    [element setCallback:action];
+    [element setServiceID:JCDownLoadServiceID];
+    [element setOperation:op];
+    [_dispatcher addDispatchItem:element];
+    [engine enqueueOperation:op];
+    DLog(@"%@", [op url]);
+    return _lastRequestID;
+}
+
+- (void)onDownloadProgressChanged:(JCRequestID)requestID target:(id)target action:(SEL)action
+{
+    DispatchElement *item = [_dispatcher getDispatchElement:requestID];
+    
+    if (item) {
+        DispatchElement *element = [[DispatchElement alloc] init];
+        [element setRequestID:requestID];
+        [element setTarget:target];
+        [element setCallback:action];
+        [element setOperation:[item operation]];
+        [_dispatcher onDownloadDispatchItem:element];
+        return;
+    }
+    DLog(@"requestID invalid");
+}
+
+#pragma mark cancel request
 
 - (void)cancelRequest:(JCRequestID)requestID
 {
     [_dispatcher cancelRequest:requestID];
 }
+
+
+#pragma mark Network status
 
 - (BOOL)isInternetAvailiable {
     return [[Reachability reachabilityForInternetConnection] isReachable];

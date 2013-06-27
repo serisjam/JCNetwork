@@ -25,12 +25,20 @@
 + (id)sharedInstance;
 - (id)init;
 
+//autoloadimage in imageview
 - (void)autoLoadImageWithURL:(NSURL *)imageURL placeHolderImage:(UIImage*)image toImageView:(UIImageView *)imageView;
+
+//post and get
 - (JCRequestID)httpGetRquest:(NSString *)path service:(JCServiceType)serviceID params:(NSDictionary *)params target:(id)target action:(SEL)action;
 - (JCRequestID)httpPostRquest:(NSString *)path service:(JCServiceType)serviceID params:(NSDictionary *)params target:(id)target action:(SEL)action;
+
 //upload
 - (JCRequestID)httpPost:(NSString *)path params:(NSDictionary *)params files:(NSDictionary *)files serivce:(JCServiceType)serviceID target:(id)target action:(SEL)action;
 - (void)onUploadProgressChanged:(JCRequestID)requestID target:(id)target action:(SEL)action;
+
+//download
+- (JCRequestID)httpGet:(NSString*)remoteURL toFile:(NSString*)filePath target:(id)target action:(SEL)action;
+- (void)onDownloadProgressChanged:(JCRequestID)requestID target:(id)target action:(SEL)action;
 
 - (void)cancelRequest:(JCRequestID)requestID;
 

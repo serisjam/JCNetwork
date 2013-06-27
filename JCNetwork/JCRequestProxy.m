@@ -33,6 +33,7 @@
 }
 
 #pragma mark - Requests
+#pragma mark request Get
 - (JCRequestID)httpGetWithServiceID:(JCServiceType)serviceID methodName:(NSString *)methodName params:(NSDictionary *)params target:(id)target action:(SEL)action
 {
     
@@ -49,6 +50,7 @@
     return [_requester httpGetRquest:[service buildPathWithMethod:methodName] service:serviceID params:params target:target action:action];
 }
 
+#pragma mark request Post
 - (JCRequestID)httpPostWithServiceID:(JCServiceType)serviceID methodName:(NSString *)methodName params:(NSDictionary *)params target:(id)target action:(SEL)action
 {
     if (params && ![params isKindOfClass:[NSDictionary class]]) {
@@ -64,11 +66,14 @@
     return [_requester httpPostRquest:[service buildPathWithMethod:methodName] service:serviceID params:params target:target action:action];
 }
 
+#pragma mark autoloadimage
 - (void)autoLoadImageWithURL:(NSURL *)imageURL placeHolderImage:(UIImage *)image toImageView:(UIImageView *)imageView
 {
     [_requester autoLoadImageWithURL:imageURL placeHolderImage:image toImageView:imageView];
 }
 
+
+#pragma mark upload
 - (JCRequestID)uploadFileWithServiceID:(JCServiceType)serviceID methodName:(NSString *)methodName params:(NSDictionary *)params files:(NSDictionary *)files target:(id)target action:(SEL)action
 {
     if (params && ![params isKindOfClass:[NSDictionary class]]) {
@@ -88,6 +93,17 @@
 - (void)onUploadProgressChanged:(JCRequestID)requestID target:(id)target action:(SEL)action
 {
     [_requester onUploadProgressChanged:requestID target:target action:action];
+}
+
+#pragma mark download
+- (JCRequestID)downloadFileFrom:(NSString *)remoteURL toFile:(NSString *)filePath target:(id)target action:(SEL)action
+{
+    return [_requester httpGet:remoteURL toFile:filePath target:target action:action];
+}
+
+- (void)onDownloadProgressChanged:(JCRequestID)requestID target:(id)target action:(SEL)action
+{
+    [_requester onDownloadProgressChanged:requestID target:target action:action];
 }
 
 - (void)cancelRequest:(JCRequestID)requestID

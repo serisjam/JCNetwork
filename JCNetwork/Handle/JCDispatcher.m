@@ -51,19 +51,18 @@
 
     [operation addCompletionHandler:^(MKNetworkOperation* completedOperation){
         DLog(@"commplete finish");
-        [_dispatchTable setObject:item forKey:[NSNumber numberWithInt:requestID]];
         JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
         [operationResponse setOperation:completedOperation];
         [operationResponse setRequestID:requestID];
         [self requestFinished:operationResponse];
     } errorHandler:^(MKNetworkOperation* completedOperation, NSError* error){
         DLog(@"commplete failed");
-        [_dispatchTable setObject:item forKey:[NSNumber numberWithInt:requestID]];
         JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
         [operationResponse setOperation:completedOperation];
         [operationResponse setRequestID:requestID];
         [self requestFailed:operationResponse withError:error];
     }];
+    [_dispatchTable setObject:item forKey:[NSNumber numberWithInt:requestID]];
 }
 
 - (DispatchElement *)getDispatchElement:(JCRequestID)requestID
@@ -80,8 +79,16 @@
 {
     id target = [item target];
     SEL callback = [item callback];
-    
     [[item operation] onUploadProgressChanged:^(double progress){
+        [target performSelector:callback withObject:[NSNumber numberWithFloat:progress]];
+    }];
+}
+
+- (void)onDownloadDispatchItem:(DispatchElement *)item
+{
+    id target = [item target];
+    SEL callback = [item callback];
+    [[item operation] onDownloadProgressChanged:^(double progress){
         [target performSelector:callback withObject:[NSNumber numberWithFloat:progress]];
     }];
 }
@@ -110,6 +117,10 @@
     
     JCNetworkResponse *response = [[JCNetworkResponse alloc] init];
     [response setRequestID:[element requestID]];
+    
+    if ([element serviceID] == JCDownLoadServiceID) {
+        responseDict = [NSDictionary dictionaryWithObjectsAndKeys:@"download file success", @"message", nil];
+    }
     [response setContent:responseDict];
     [response setStatus:JCNetworkResponseStatusSuccess];
   
@@ -124,6 +135,7 @@
         return;
     
     JCNetworkResponse *response = [[JCNetworkResponse alloc] init];
+    [response setRequestID:[element requestID]];
     [response setContent:[NSDictionary dictionaryWithObjectsAndKeys:error, @"ERROR", nil]];
     [response setStatus:JCNetworkResponseStatusFailed];
     [response setError:error];

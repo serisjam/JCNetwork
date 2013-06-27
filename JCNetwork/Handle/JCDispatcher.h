@@ -29,6 +29,7 @@
 //根据requestID获取分发Item
 - (DispatchElement *)getDispatchElement:(JCRequestID)requestID;
 - (void)onUploadDispatchItem:(DispatchElement *)item;
+- (void)onDownloadDispatchItem:(DispatchElement *)item;
 
 - (void)requestFinished:(JCOperationResponse *)operationResponse;
 - (void)requestFailed:(JCOperationResponse *)operationResponse withError:(NSError *)error;

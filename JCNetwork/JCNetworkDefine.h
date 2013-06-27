@@ -16,7 +16,7 @@ typedef unsigned int JCRequestID;
 #define JC_ERROR_REQUESTID 0        
 
 //每个新增产品线需增加新的Product类并在这里添加新的说明
-#define SERVICES [NSArray arrayWithObjects:@"JCImageService", @"JCZhaofangtongService", @"JCHouseService", @"JCEstateBookService", @"JCHouseBookService", nil]
+#define SERVICES [NSArray arrayWithObjects:@"JCImageService", @"JCDownLoadService", @"JCZhaofangtongService", @"JCHouseService", @"JCEstateBookService", @"JCHouseBookService", nil]
 
 //请求响应的状态
 typedef enum _JCNetworkResponseStatus {
@@ -27,7 +27,8 @@ typedef enum _JCNetworkResponseStatus {
 //定义不同产品的ServiceID
 typedef enum _JCServiceType
 {
-    JCImageServiceID = 5,           //图片服务
+    JCImageServiceID = 5,           //图片
+    JCDownLoadServiceID = 8,        //下载
     JCZhaofangtongServiceID = 10,   //找房通
     JCHouseServiceID = 20,          //139住
     JCEstateBookServiceID = 30,     //找房通地产说

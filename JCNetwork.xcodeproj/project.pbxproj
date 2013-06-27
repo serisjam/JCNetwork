@@ -31,6 +31,7 @@
 		3994926C1776B8DC003C3A7B /* JCNetworkResponse.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 399492691776B7EC003C3A7B /* JCNetworkResponse.h */; };
 		3994926D1776B8DC003C3A7B /* JCNetworkDefine.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 39DB2D501776AB6200EFE81D /* JCNetworkDefine.h */; };
 		39BD709D1779D44100B78065 /* JCHouseBookService.m in Sources */ = {isa = PBXBuildFile; fileRef = 39BD709C1779D44100B78065 /* JCHouseBookService.m */; };
+		39C8D7EE177C0DFF00945913 /* JCDownLoadService.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C8D7ED177C0DFF00945913 /* JCDownLoadService.m */; };
 		39DB2D1F1776940700EFE81D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39DB2D1E1776940700EFE81D /* Foundation.framework */; };
 		39DB2D2E1776946200EFE81D /* JCRequestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 39DB2D2D1776946200EFE81D /* JCRequestProxy.m */; };
 		39DB2D2F177694C100EFE81D /* JCRequestProxy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 39DB2D2C1776946200EFE81D /* JCRequestProxy.h */; };
@@ -97,6 +98,8 @@
 		3994926A1776B7EC003C3A7B /* JCNetworkResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCNetworkResponse.m; sourceTree = "<group>"; };
 		39BD709B1779D44100B78065 /* JCHouseBookService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHouseBookService.h; sourceTree = "<group>"; };
 		39BD709C1779D44100B78065 /* JCHouseBookService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHouseBookService.m; sourceTree = "<group>"; };
+		39C8D7EC177C0DFF00945913 /* JCDownLoadService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDownLoadService.h; sourceTree = "<group>"; };
+		39C8D7ED177C0DFF00945913 /* JCDownLoadService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDownLoadService.m; sourceTree = "<group>"; };
 		39DB2D1B1776940700EFE81D /* libJCNetwork.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJCNetwork.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		39DB2D1E1776940700EFE81D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		39DB2D221776940700EFE81D /* JCNetwork-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JCNetwork-Prefix.pch"; sourceTree = "<group>"; };
@@ -255,6 +258,8 @@
 				39DB2D4B1776AAFB00EFE81D /* JCBaseService.m */,
 				398F3953177961E100AA15CA /* JCImageService.h */,
 				398F3954177961E100AA15CA /* JCImageService.m */,
+				39C8D7EC177C0DFF00945913 /* JCDownLoadService.h */,
+				39C8D7ED177C0DFF00945913 /* JCDownLoadService.m */,
 				39FF0F291777DF1600E99B25 /* JCHouseService.h */,
 				39FF0F2A1777DF1600E99B25 /* JCHouseService.m */,
 				39DB2D511776AC4100EFE81D /* JCZhaofangtongService.h */,
@@ -340,6 +345,7 @@
 				398F3955177961E100AA15CA /* JCImageService.m in Sources */,
 				398F395A17796AAF00AA15CA /* JCEstateBookService.m in Sources */,
 				39BD709D1779D44100B78065 /* JCHouseBookService.m in Sources */,
+				39C8D7EE177C0DFF00945913 /* JCDownLoadService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
