@@ -37,7 +37,7 @@
 - (void)onDownloadProgressChanged:(JCRequestID)requestID target:(id)target action:(SEL)action;
 
 // 根据请求ID取消一个请求
-- (void)cancelRequest:(JCRequestID)requestID;
+- (void)cancelRequestID:(JCRequestID)requestID;
 
 //根据不同产品serviceID设置其接口的名字和版本
 - (void)setApiName:(NSString *)apiName forService:(JCServiceType)serviceID;
@@ -45,5 +45,9 @@
 
 //获取网络类型 wifi 或是 2g/3g
 - (NSString *)getNetworkStatus;
+- (NSString *)reachabilityWithHostname:(NSString*)hostname;
+
+- (BOOL)isInternetAvailiable;
+- (BOOL)isWiFiAvailiable;
 
 @end

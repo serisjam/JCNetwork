@@ -48,6 +48,8 @@
                             
                             //search
                             @"search.ashx",
+                            @"searchLocation.ashx",
+                            @"searchKeywords.ashx",
                             
                             //projectlist
                             @"projectdetail.ashx",

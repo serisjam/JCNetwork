@@ -16,6 +16,8 @@
 {
     NSMutableDictionary *_serviceDict;
     NSMutableDictionary *_dispatchTable;
+    //自定义post超时处理，apple定义默认超时240s
+    NSMutableDictionary *_timeoutDict;
 }
 
 @property (nonatomic, readonly) NSMutableDictionary *serviceDict;

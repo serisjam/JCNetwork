@@ -106,7 +106,7 @@
     [_requester onDownloadProgressChanged:requestID target:target action:action];
 }
 
-- (void)cancelRequest:(JCRequestID)requestID
+- (void)cancelRequestID:(JCRequestID)requestID
 {
     [_requester cancelRequest:requestID];
 }
@@ -131,7 +131,33 @@
 #pragma mark getNeworkStatus
 - (NSString *)getNetworkStatus
 {
-    return [_requester getNetworkStatus];
+    if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN)
+        return @"2G3G";
+    else if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWiFi)
+        return @"WiFi";
+    else
+        return @"";
+}
+
+- (NSString *)reachabilityWithHostname:(NSString*)hostname
+{
+    NetworkStatus netStatus = [[Reachability reachabilityWithHostname:hostname] currentReachabilityStatus];
+    
+    if (netStatus == ReachableViaWiFi) {
+        return @"WiFi";
+    } else if (netStatus == ReachableViaWWAN) {
+        return @"2G3G";
+    } else {
+        return @"";
+    }
+}
+
+- (BOOL)isInternetAvailiable {
+    return [[Reachability reachabilityForInternetConnection] isReachable];
+}
+
+- (BOOL)isWiFiAvailiable {
+    return [[Reachability reachabilityForInternetConnection] isReachableViaWiFi];
 }
 
 @end

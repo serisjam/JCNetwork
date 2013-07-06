@@ -157,6 +157,7 @@
     }
     
     MKNetworkEngine *engine = [_servicesRequestEngine objectForKey:[NSNumber numberWithInt:JCDownLoadServiceID]];
+    
     MKNetworkOperation *op = [engine operationWithURLString:remoteURL];
     [op setFreezable:YES];
     [op addDownloadStream:[NSOutputStream outputStreamToFileAtPath:filePath append:YES]];
@@ -194,26 +195,6 @@
 - (void)cancelRequest:(JCRequestID)requestID
 {
     [_dispatcher cancelRequest:requestID];
-}
-
-
-#pragma mark Network status
-
-- (BOOL)isInternetAvailiable {
-    return [[Reachability reachabilityForInternetConnection] isReachable];
-}
-
-- (BOOL)isWiFiAvailiable {
-    return [[Reachability reachabilityForInternetConnection] isReachableViaWiFi];
-}
-
-- (NSString *)getNetworkStatus {
-    if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN)
-        return @"2G3G";
-    else if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWiFi)
-        return @"WiFi";
-    else
-        return @"";
 }
 
 @end

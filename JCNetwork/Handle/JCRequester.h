@@ -42,6 +42,4 @@
 
 - (void)cancelRequest:(JCRequestID)requestID;
 
-- (NSString *)getNetworkStatus;
-
 @end
