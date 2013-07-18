@@ -27,6 +27,7 @@
 
 //autoloadimage in imageview
 - (void)autoLoadImageWithURL:(NSURL *)imageURL placeHolderImage:(UIImage*)image toImageView:(UIImageView *)imageView;
+- (void)emptyImageCache;
 
 //post and get
 - (JCRequestID)httpGetRquest:(NSString *)path service:(JCServiceType)serviceID params:(NSDictionary *)params target:(id)target action:(SEL)action;

@@ -190,6 +190,18 @@
     DLog(@"requestID invalid");
 }
 
+#pragma mark empty Cache
+
+- (void)emptyImageCache
+{
+    if ([[_servicesRequestEngine allKeys] indexOfObject:[NSNumber numberWithInt:JCImageServiceID]] == NSNotFound) {
+        return;
+    }
+    
+    MKNetworkEngine *engine = [_servicesRequestEngine objectForKey:[NSNumber numberWithInt:JCImageServiceID]];
+    [engine emptyCache];
+}
+
 #pragma mark cancel request
 
 - (void)cancelRequest:(JCRequestID)requestID

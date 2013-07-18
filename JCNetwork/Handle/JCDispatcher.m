@@ -59,11 +59,12 @@
     [operation addCompletionHandler:^(MKNetworkOperation* completedOperation){
         DLog(@"commplete finish");
         NSTimer *timer = [_timeoutDict objectForKey:[NSNumber numberWithInt:requestID]];
-        if (!timer) {
+        if (!timer && [completedOperation.HTTPMethod isEqualToString:@"POST"]) {
+            DLog(@"timer is nil");
             return ;
         }
         [timer invalidate];
-
+        DLog(@"finish");
         JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
         [operationResponse setOperation:completedOperation];
         [operationResponse setRequestID:requestID];
@@ -71,7 +72,7 @@
     } errorHandler:^(MKNetworkOperation* completedOperation, NSError* error){
         DLog(@"commplete failed");
         NSTimer *timer = [_timeoutDict objectForKey:[NSNumber numberWithInt:requestID]];
-        if (!timer) {
+        if (!timer && [completedOperation.HTTPMethod isEqualToString:@"POST"]) {
             return ;
         }
         [timer invalidate];
@@ -129,15 +130,15 @@
     DispatchElement *item = [[timer userInfo] objectForKey:@"item"];
     JCRequestID requestID = [item requestID];
     MKNetworkOperation *operation = [item operation];
+    DLog(@"time out");
+    [timer invalidate];
+    [_timeoutDict removeObjectForKey:[NSNumber numberWithInt:requestID]];
     
     JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
     [operationResponse setOperation:operation];
     [operationResponse setRequestID:requestID];
     NSError *error = [NSError errorWithDomain:@"request time out" code:-1001 userInfo:nil];
     [self requestFailed:operationResponse withError:error];
-    
-    [timer invalidate];
-    [_timeoutDict removeObjectForKey:[NSNumber numberWithInt:requestID]];
 }
 
 #pragma mark - Handle responses
