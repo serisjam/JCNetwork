@@ -62,6 +62,7 @@
     if ([[service getAllMethods] indexOfObject:methodName] == NSNotFound) {
         return JC_ERROR_REQUESTID;
     }
+    
     return [_requester httpPostRquest:[service buildPathWithMethod:methodName] service:serviceID params:params target:target action:action];
 }
 
@@ -73,7 +74,7 @@
 
 - (void)emptyImageCache
 {
-    
+    [_requester emptyImageCache];
 }
 
 #pragma mark upload
