@@ -11,5 +11,7 @@
 
 // products
 #import "JCZhaofangtongService.h"
+#import "JCEstateBookService.h"
+#import "JCAppsService.h"
 
 #endif

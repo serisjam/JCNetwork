@@ -8,7 +8,7 @@
 
 #import "JCBaseService.h"
 
-@interface JCHouseBookService : JCBaseService
+@interface JCAppsService : JCBaseService
 
 @property (assign, nonatomic) JCServiceType serviceID;
 

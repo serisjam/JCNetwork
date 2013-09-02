@@ -21,30 +21,35 @@
             
 #ifdef DEBUG
         _hostName = @"dcs.zhaofangtong.com";
-        _path = @"AppDataAccess/";
+        _path = @"Interface/";
 #else
             _hostName = @"dcs.zhaofangtong.com";
-            _path = @"AppDataAccess/";
+            _path = @"Interface/";
 #endif
             NSArray *apiList = [NSArray arrayWithObjects:
                                 //手机动态获取所有频道的分类
-                                @"AppNewsCategory.aspx",
+                                @"AppNewsCategory.ashx",
                                 //通过手机串号，获取该用户已经订阅的频道
-                                @"AppGetSubscriberNewsCategory.aspx",
+                                @"AppGetSubscriberNewsCategory.ashx",
                                 //将自己订阅的频道保存在服务器端
-                                @"AppSaveSubscriberNewsCategory.aspx",
+                                @"AppSaveSubscriberNewsCategory.ashx",
                                 //推荐
-                                @"AppRecommend.aspx",
+                                @"AppRecommend.ashx",
                                 //根据不同的条件获取相关新闻
-                                @"iosAppNews.aspx",
+                                @"AppNews.ashx",
                                 //每条新闻的相关评论
-                                @"AppRemark.aspx",
+                                @"AppRemark.ashx",
                                 //添加好评
-                                @"AppGoodRemark.aspx",
+                                @"AppGoodRemark.ashx",
                                 //保存评论
-                                @"AppRemarkAdd.aspx",
+                                @"AppRemarkAdd.ashx",
                                 //反馈信息
-                                @"AppFeedback.aspx",
+                                @"AppFeedback.ashx",
+                                //升级信息
+                                @"AppUpdate.ashx",
+                                //测试URL下载
+                                @"Apps.ashx",
+                                
                                 nil];
             
             _methodDict = [[NSMutableDictionary alloc] initWithCapacity:[apiList count]];
