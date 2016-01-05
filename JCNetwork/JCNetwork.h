@@ -8,12 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for JCNetwork.
+#if __has_include(<JCNetwork/JCNetwork.h>)
 FOUNDATION_EXPORT double JCNetworkVersionNumber;
-
-//! Project version string for JCNetwork.
 FOUNDATION_EXPORT const unsigned char JCNetworkVersionString[];
+#import <JCNetwork/JCNetworkDefine.h>
+#import <JCNetwork/JCNetworkResponse.h>
+#import <JCNetwork/JCRequestProxy.h>
+#import <JCNetwork/JCRequestObj.h>
+#import <JCNetwork/JCResponedObj.h>
+#else
+#import "JCNetworkDefine.h"
+#import "JCNetworkResponse.h"
+#import "JCRequestProxy.h"
+#import "JCRequestObj.h"
+#import "JCResponedObj.h"
+#endif
 
-// In this header, you should import all the public headers of your framework using statements like #import <JCNetwork/PublicHeader.h>
 
 

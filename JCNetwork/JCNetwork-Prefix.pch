@@ -1,0 +1,19 @@
+//
+//  JCNetwork-Prefix.pch
+//  JCNetwork
+//
+//  Created by Jam on 16/1/5.
+//  Copyright © 2016年 Jam. All rights reserved.
+//
+
+#ifndef JCNetwork_Prefix_pch
+#define JCNetwork_Prefix_pch
+
+#import <Foundation/Foundation.h>
+#import "MKNetworkKit.h"
+#import "JCNetworkDefine.h"
+#import "JCNetworkResponse.h"
+#import "JCRequestObj.h"
+#import "NSObject+YYModel.h"
+
+#endif /* JCNetwork_Prefix_pch */
