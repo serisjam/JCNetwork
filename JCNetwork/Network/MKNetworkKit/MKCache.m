@@ -152,7 +152,6 @@ NSUInteger const kMKCacheDefaultCost = 10;
 }
 
 -(id <NSCoding>) objectForKeyedSubscript:(id <NSCopying>) key {
-  
   NSData *cachedData = self.inMemoryCache[key];
   if(cachedData) return cachedData;
   
@@ -172,7 +171,6 @@ NSUInteger const kMKCacheDefaultCost = 10;
 }
 
 - (void)setObject:(id <NSCoding>) obj forKeyedSubscript:(id <NSCopying>) key {
-  
   dispatch_async(self.queue, ^{
     
     self.inMemoryCache[key] = obj;

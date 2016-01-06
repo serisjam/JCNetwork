@@ -9,9 +9,19 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>JCNetworkAggregate.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>EB45791B1C3CC04300855D9C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>EB52E8DF1C3BB5CA00329186</key>
 		<dict>
 			<key>primary</key>

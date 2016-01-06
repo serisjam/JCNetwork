@@ -114,11 +114,11 @@
     __weak typeof(self) weakSelf = self;
     [request addDownloadProgressChangedHandler:^(MKNetworkRequest* completedRequest){
         switch (completedRequest.state) {
-            case MKNKRequestStateCompleted: {
+            case MKNKRequestStateStarted: {
                 JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
                 operationResponse.request = completedRequest;
                 operationResponse.requestID = completedRequest.getRequestID;
-                [weakSelf requestFinished:operationResponse];
+                [weakSelf requestDowning:operationResponse];
             }
                 break;
             case MKNKRequestStateError: {
@@ -128,9 +128,7 @@
                 [weakSelf requestFailed:operationResponse withError:completedRequest.error];
             }
                 break;
-            default: {
-                [weakSelf cancelRequest:completedRequest.getRequestID];
-            }
+            default:
                 break;
         }
     }];
@@ -146,9 +144,9 @@
 }
 
 - (void)cancelRequest:(JCRequestID)requestID {
-    MKNetworkRequest *request = [_dispatchTable objectForKey:[NSNumber numberWithInt:requestID]];
-    if (request) {
-        [request cancel];
+    DispatchElement *element = [_dispatchTable objectForKey:[NSNumber numberWithInt:requestID]];
+    if (element) {
+        [element.request cancel];
         [_dispatchTable removeObjectForKey:[NSNumber numberWithInt:requestID]];
     }
 }
@@ -167,6 +165,27 @@
 
 #pragma mark - Handle responses
 
+- (void)requestDowning:(JCOperationResponse *)operationResponse {
+    DispatchElement *element = [_dispatchTable objectForKey:[NSNumber numberWithInt:[operationResponse requestID]]];
+    if (!element) {
+        return ;
+    }
+    
+    JCNetworkResponse *response = [self handRequestResponsed:operationResponse];
+    response.content = nil;
+    response.progress = operationResponse.request.progress;
+    [response setStatus:JCNetworkResponseStatusSuccess];
+    
+    if (element.responseBlock) {
+        element.responseBlock(response);
+    }
+    
+    if (operationResponse.request.progress >= 1.0f) {
+        // remove dispatch item from dispatch table
+        [_dispatchTable removeObjectForKey:[NSNumber numberWithInt:element.requestID]];
+    }
+}
+
 - (void)requestFinished:(JCOperationResponse *)operationResponse {
     DispatchElement *element = [_dispatchTable objectForKey:[NSNumber numberWithInt:[operationResponse requestID]]];
     if (!element) {
@@ -174,8 +193,7 @@
     }
     
     NSDictionary *responseDict = [operationResponse.request responseAsJSON];
-    JCNetworkResponse *response = [[JCNetworkResponse alloc] init];
-    [response setRequestID:operationResponse.requestID];
+    JCNetworkResponse *response = [self handRequestResponsed:operationResponse];
     
     if ([element entityClassName] != nil) {
         Class cls = NSClassFromString(element.entityClassName);
@@ -185,24 +203,30 @@
         [response setContent:responseDict];
     }
     
-    response.progress = operationResponse.request.progress;
     [response setStatus:JCNetworkResponseStatusSuccess];
     [self dispatchResponse:response forElement:element];
 }
 
 - (void)requestFailed:(JCOperationResponse *)operationResponse withError:(NSError *)error {
+    
     id element = [_dispatchTable objectForKey:[NSNumber numberWithInt:[operationResponse requestID]]];
     if (!element)
-        return;
+        return ;
+
+    JCNetworkResponse *response = [self handRequestResponsed:operationResponse];
+    [response setError:error];
+    [self dispatchResponse:response forElement:element];
+}
+
+- (JCNetworkResponse *)handRequestResponsed:(JCOperationResponse *)operationResponse {
     
     JCNetworkResponse *response = [[JCNetworkResponse alloc] init];
     [response setRequestID:operationResponse.requestID];
     [response setError:operationResponse.request.error];
     [response setContent:nil];
     [response setStatus:JCNetworkResponseStatusFailed];
-    [response setError:error];
     
-    [self dispatchResponse:response forElement:element];
+    return response;
 }
 
 //factory method returen different products request queue

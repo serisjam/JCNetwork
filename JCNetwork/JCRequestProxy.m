@@ -67,6 +67,10 @@
         return JC_ERROR_REQUESTID;
     }
     
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+    }
+    
     return [_requester downloadFileFrom:remoteURL toFile:filePath withDownLoadBlock:responedBlock];
 }
 
@@ -83,7 +87,6 @@
     if (!imageURL) {
         return;
     }
-    
     return [_requester loadImageWithURL:imageURL size:size completionHandler:imageFetchBlock];
 }
 

@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		EB45791B1C3CC04300855D9C /* JCNetworkAggregate */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = EB45791E1C3CC04300855D9C /* Build configuration list for PBXAggregateTarget "JCNetworkAggregate" */;
+			buildPhases = (
+				EB45791F1C3CC06000855D9C /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = JCNetworkAggregate;
+			productName = JCNetworkAggregate;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		EB52E8E41C3BB5CA00329186 /* JCNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = EB52E8E31C3BB5CA00329186 /* JCNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EB52E8EB1C3BB5CA00329186 /* JCNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB52E8E01C3BB5CA00329186 /* JCNetwork.framework */; };
@@ -384,6 +398,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = Jam;
 				TargetAttributes = {
+					EB45791B1C3CC04300855D9C = {
+						CreatedOnToolsVersion = 7.2;
+					};
 					EB52E8DF1C3BB5CA00329186 = {
 						CreatedOnToolsVersion = 7.2;
 					};
@@ -406,6 +423,7 @@
 			targets = (
 				EB52E8DF1C3BB5CA00329186 /* JCNetwork */,
 				EB52E8E91C3BB5CA00329186 /* JCNetworkTests */,
+				EB45791B1C3CC04300855D9C /* JCNetworkAggregate */,
 			);
 		};
 /* End PBXProject section */
@@ -426,6 +444,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		EB45791F1C3CC06000855D9C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Sets the target folders and the final framework product.\nFMK_NAME=${PROJECT_NAME}\n# Install dir will be the final output to the framework.\n# The following line create it in the root folder of the current project.\nINSTALL_DIR=${SRCROOT}/Products/${FMK_NAME}.framework\n# Working dir will be deleted after the framework creation.\nWRK_DIR=build\nDEVICE_DIR=${WRK_DIR}/Release-iphoneos/${FMK_NAME}.framework\nSIMULATOR_DIR=${WRK_DIR}/Release-iphonesimulator/${FMK_NAME}.framework\n# -configuration ${CONFIGURATION}\n# Clean and Building both architectures.\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphoneos clean build\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphonesimulator clean build\n# Cleaning the oldest.\nif [ -d \"${INSTALL_DIR}\" ]\nthen\nrm -rf \"${INSTALL_DIR}\"\nfi\nmkdir -p \"${INSTALL_DIR}\"\ncp -R \"${DEVICE_DIR}/\" \"${INSTALL_DIR}/\"\n# Uses the Lipo Tool to merge both binary files (i386 + armv6/armv7) into one Universal final product.\nlipo -create \"${DEVICE_DIR}/${FMK_NAME}\" \"${SIMULATOR_DIR}/${FMK_NAME}\" -output \"${INSTALL_DIR}/${FMK_NAME}\"\nrm -r \"${WRK_DIR}\"\nopen \"${INSTALL_DIR}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EB52E8DB1C3BB5CA00329186 /* Sources */ = {
@@ -476,6 +510,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		EB45791C1C3CC04300855D9C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		EB45791D1C3CC04300855D9C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		EB52E8F21C3BB5CA00329186 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -649,6 +697,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		EB45791E1C3CC04300855D9C /* Build configuration list for PBXAggregateTarget "JCNetworkAggregate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB45791C1C3CC04300855D9C /* Debug */,
+				EB45791D1C3CC04300855D9C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		EB52E8DA1C3BB5CA00329186 /* Build configuration list for PBXProject "JCNetwork" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

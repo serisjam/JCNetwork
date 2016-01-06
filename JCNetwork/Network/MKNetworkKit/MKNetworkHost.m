@@ -151,7 +151,7 @@ NSString *const kMKCacheDefaultDirectoryName = @"com.mknetworkkit.mkcache";
 }
 
 -(void) enableCacheWithDirectory:(NSString*) cacheDirectoryPath inMemoryCost:(NSUInteger) inMemoryCost {
-  
+    
   self.dataCache = [[MKCache alloc] initWithCacheDirectory:[NSString stringWithFormat:@"%@/data", cacheDirectoryPath]
                                               inMemoryCost:inMemoryCost];
   
@@ -230,7 +230,6 @@ NSString *const kMKCacheDefaultDirectoryName = @"com.mknetworkkit.mkcache";
     }
     
     NSData *cachedData = self.dataCache[@(request.hash)];
-    
     if(cachedData) {
       request.responseData = cachedData;
       request.response = cachedResponse;
@@ -253,11 +252,11 @@ NSString *const kMKCacheDefaultDirectoryName = @"com.mknetworkkit.mkcache";
     
     sessionToUse = self.ephemeralSession;
   }
-  
+    
   NSURLSessionDataTask *task = [sessionToUse
                                 dataTaskWithRequest:request.request
                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                  
+                                    
                                   if(request.state == MKNKRequestStateCancelled) {
                                     
                                     request.response = (NSHTTPURLResponse*) response;
@@ -269,23 +268,20 @@ NSString *const kMKCacheDefaultDirectoryName = @"com.mknetworkkit.mkcache";
                                     }
                                     return;
                                   }
-                                  if(!response) {
                                     
+                                  if(!response) {
                                     request.response = (NSHTTPURLResponse*) response;
                                     request.error = error;
                                     request.responseData = data;
                                     request.state = MKNKRequestStateError;
                                     return;
                                   }
-                                  
                                   request.response = (NSHTTPURLResponse*) response;
                                   
                                   if(request.response.statusCode >= 200 && request.response.statusCode < 300) {
-                                    
                                     request.responseData = data;
                                     request.error = error;
                                   } else if(request.response.statusCode == 304) {
-                                    
                                     // don't do anything
                                     
                                   } else if(request.response.statusCode >= 400) {
@@ -294,7 +290,7 @@ NSString *const kMKCacheDefaultDirectoryName = @"com.mknetworkkit.mkcache";
                                     if(response) userInfo[@"response"] = response;
                                     if(error) userInfo[@"error"] = error;
                                     
-                                    NSError *httpError = [NSError errorWithDomain:@"com.mknetworkkit.httperrordomain"
+                                    NSError *httpError = [NSError errorWithDomain:@"com.jcnetwork.httperrordomain"
                                                                              code:request.response.statusCode
                                                                          userInfo:userInfo];
                                     request.error = httpError;
@@ -303,9 +299,7 @@ NSString *const kMKCacheDefaultDirectoryName = @"com.mknetworkkit.mkcache";
                                     // the super class implementation just returns the same error object set in previous line
                                     request.error = [self errorForCompletedRequest:request];
                                   }
-                                  
                                   if(!request.error) {
-                                    
                                     if(request.cacheable) {
                                       self.dataCache[@(request.hash)] = data;
                                       self.responseCache[@(request.hash)] = response;
@@ -317,12 +311,10 @@ NSString *const kMKCacheDefaultDirectoryName = @"com.mknetworkkit.mkcache";
                                     
                                     request.state = MKNKRequestStateCompleted;
                                   } else {
-                                    
                                     dispatch_sync(self.runningTasksSynchronizingQueue, ^{
                                       [self.activeTasks removeObject:request];
                                     });
                                     request.state = MKNKRequestStateError;
-                                    NSLog(@"%@", request);
                                   }
                                 }];
   
@@ -401,17 +393,44 @@ NSString *const kMKCacheDefaultDirectoryName = @"com.mknetworkkit.mkcache";
   return request;
 }
 
+- (NSData *)getCacheDataWithRequest:(MKNetworkRequest*) request {
+    if(!request || !request.request) {
+        NSLog(@"Request is nil, check your URL and other parameters you use to build your request");
+        return nil;
+    }
+    
+    if(request.cacheable && !request.doNotCache) {
+        NSHTTPURLResponse *cachedResponse = self.responseCache[@(request.hash)];
+        NSDate *cacheExpiryDate = cachedResponse.cacheExpiryDate;
+        NSTimeInterval expiryTimeFromNow = [cacheExpiryDate timeIntervalSinceNow];
+        
+        if(cachedResponse.isContentTypeImage && !cacheExpiryDate) {
+            
+            expiryTimeFromNow =
+            cachedResponse.hasRequiredRevalidationHeaders ? kMKNKDefaultCacheDuration : kMKNKDefaultImageCacheDuration;
+        }
+        
+        if(cachedResponse.hasDoNotCacheDirective || !cachedResponse.hasHTTPCacheHeaders) {
+            
+            expiryTimeFromNow = kMKNKDefaultCacheDuration;
+        }
+        
+        NSData *cachedData = self.dataCache[@(request.hash)];
+        
+        return cachedData;
+    }
+    
+    return nil;
+}
+
 // You can override this method to tweak request creation
 // But ensure that you call super
 -(void) prepareRequest: (MKNetworkRequest*) request {
-  
+    
   if(!request.cacheable || request.ignoreCache) return;
-  
   NSHTTPURLResponse *cachedResponse = self.responseCache[@(request.hash)];
-  
   NSString *lastModified = [cachedResponse.allHeaderFields objectForCaseInsensitiveKey:@"Last-Modified"];
   NSString *eTag = [cachedResponse.allHeaderFields objectForCaseInsensitiveKey:@"ETag"];
-  
   if(lastModified) [request addHeaders:@{@"IF-MODIFIED-SINCE" : lastModified}];
   if(eTag) [request addHeaders:@{@"IF-NONE-MATCH" : eTag}];
 }

@@ -29,6 +29,7 @@ const float kFreshLoadAnimationDuration = 0.25f;
 +(void)changeImageHostEngine:(MKNetworkHost *)hostEngine {
     if (imageHost != hostEngine) {
         imageHost = hostEngine;
+        [imageHost enableCache];
     }
 }
 

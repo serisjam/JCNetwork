@@ -67,6 +67,8 @@
 @property (weak) id <MKNetworkHostDelegate> delegate;
 @property (copy) void (^backgroundSessionCompletionHandler)(void);
 
+// Set CacheData with Request
+- (NSData *)getCacheDataWithRequest:(MKNetworkRequest*) networkRequest;
 // You can override this method to tweak request creation
 // But ensure that you call super
 -(void) prepareRequest: (MKNetworkRequest*) networkRequest;

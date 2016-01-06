@@ -142,11 +142,14 @@
 
 - (void)loadImageWithURL:(NSURL *)imageURL size:(CGSize)size completionHandler:(JCNetworkImageFetch)imageFetchBlock {
     if ([[_requestEngines allKeys] indexOfObject:@"image"] == NSNotFound) {
-        [_requestEngines setObject:[[MKNetworkHost alloc] init] forKey:@"image"];
+        MKNetworkHost *engineNetwork = [[MKNetworkHost alloc] init];
+        [engineNetwork enableCache];
+        [_requestEngines setObject:engineNetwork forKey:@"image"];
     }
     
     MKNetworkHost *hostEngine = [_requestEngines objectForKey:@"image"];
     MKNetworkRequest *hostRequest = [hostEngine requestWithURLString:imageURL.absoluteString];
+    hostRequest.alwaysCache = YES;
     
     [hostRequest addCompletionHandler:^(MKNetworkRequest* completedRequest){
         if(completedRequest.responseAvailable) {
@@ -159,19 +162,36 @@
             imageFetchBlock(decompressedImage, completedRequest.isCachedResponse);
             return ;
         }
-        imageFetchBlock(nil, NO);
+        
+        if (completedRequest.state == MKNKRequestStateError) {
+            imageFetchBlock(nil, NO);
+        }
     }];
+    [hostEngine startRequest:hostRequest];
 }
 
 - (UIImage *)getImageIfExisted:(NSURL *)imageURL {
     if ([[_requestEngines allKeys] indexOfObject:@"image"] == NSNotFound) {
-        [_requestEngines setObject:[[MKNetworkHost alloc] init] forKey:@"image"];
+        MKNetworkHost *engineNetwork = [[MKNetworkHost alloc] init];
+        [engineNetwork enableCache];
+        [_requestEngines setObject:engineNetwork forKey:@"image"];
     }
     
     MKNetworkHost *hostEngine = [_requestEngines objectForKey:@"image"];
     MKNetworkRequest *hostRequest = [hostEngine requestWithURLString:imageURL.absoluteString];
     
-    return hostRequest.responseAsImage;
+    NSData *cacheData = [hostEngine getCacheDataWithRequest:hostRequest];
+    
+    if (cacheData) {
+        static CGFloat scale = 2.0f;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            scale = [UIScreen mainScreen].scale;
+        });
+        return [UIImage imageWithData:cacheData scale:scale];
+    }
+    
+    return nil;
 }
 
 #pragma cancelRequest
@@ -186,6 +206,7 @@
     
     MKNetworkRequest *request = [hostEngine requestWithPath:requestObj.path params:[self bulidRequestParamsWithRequest:requestObj] httpMethod:method];
     
+    [request addHeaders:requestObj.headerDictionary];
     request.alwaysCache = requestObj.alwaysCache;
     request.alwaysLoad = requestObj.alwaysLoad;
     request.ignoreCache = requestObj.ignoreCache;
@@ -253,6 +274,7 @@
     [paramsDict removeObjectForKey:@"hostName"];
     [paramsDict removeObjectForKey:@"path"];
     [paramsDict removeObjectForKey:@"parameterType"];
+    [paramsDict removeObjectForKey:@"headerDictionary"];
     [paramsDict removeObjectForKey:@"doNotCache"];
     [paramsDict removeObjectForKey:@"alwaysCache"];
     [paramsDict removeObjectForKey:@"ignoreCache"];
