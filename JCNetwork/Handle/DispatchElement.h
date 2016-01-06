@@ -12,7 +12,7 @@
 @interface DispatchElement : NSObject
 
 @property (nonatomic, assign) JCRequestID requestID;
-@property (nonatomic, strong) JCNetworkResponseBlock responseBlock;
+@property (nonatomic, copy) JCNetworkResponseBlock responseBlock;
 @property (nonatomic, strong) NSString *hostName;
 @property (nonatomic, strong) NSString *entityClassName;
 @property (nonatomic, assign) MKNetworkRequest *request;

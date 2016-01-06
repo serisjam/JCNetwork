@@ -44,6 +44,76 @@
     __weak typeof(self) weakSelf = self;
     [request addCompletionHandler:^(MKNetworkRequest* completedRequest){
         switch (completedRequest.state) {
+            case MKNKRequestStateStaleResponseAvailableFromCache:
+            case MKNKRequestStateResponseAvailableFromCache: {
+                JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
+                operationResponse.request = completedRequest;
+                operationResponse.requestID = completedRequest.getRequestID;
+                [weakSelf requestFinished:operationResponse];
+            }
+                break;
+            case MKNKRequestStateCompleted: {
+                JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
+                operationResponse.request = completedRequest;
+                operationResponse.requestID = completedRequest.getRequestID;
+                [weakSelf requestFinished:operationResponse];
+            }
+                break;
+            case MKNKRequestStateError: {
+                JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
+                operationResponse.request = completedRequest;
+                operationResponse.requestID = completedRequest.getRequestID;
+                [weakSelf requestFailed:operationResponse withError:completedRequest.error];
+            }
+                break;
+            default: {
+                [weakSelf cancelRequest:completedRequest.getRequestID];
+            }
+                break;
+        }
+    }];
+}
+
+- (void)addDispatchUploadItem:(DispatchElement *)item {
+    JCRequestID requestID = item.requestID;
+    MKNetworkRequest *request = item.request;
+    [self cancelRequest:requestID];
+    [_dispatchTable setObject:item forKey:[NSNumber numberWithInt:requestID]];
+    
+    __weak typeof(self) weakSelf = self;
+    [request addUploadProgressChangedHandler:^(MKNetworkRequest* completedRequest){
+        switch (completedRequest.state) {
+            case MKNKRequestStateCompleted: {
+                JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
+                operationResponse.request = completedRequest;
+                operationResponse.requestID = completedRequest.getRequestID;
+                [weakSelf requestFinished:operationResponse];
+            }
+                break;
+            case MKNKRequestStateError: {
+                JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
+                operationResponse.request = completedRequest;
+                operationResponse.requestID = completedRequest.getRequestID;
+                [weakSelf requestFailed:operationResponse withError:completedRequest.error];
+            }
+                break;
+            default: {
+                [weakSelf cancelRequest:completedRequest.getRequestID];
+            }
+                break;
+        }
+    }];
+}
+
+- (void)addDispatchDownloadItem:(DispatchElement *)item {
+    JCRequestID requestID = item.requestID;
+    MKNetworkRequest *request = item.request;
+    [self cancelRequest:requestID];
+    [_dispatchTable setObject:item forKey:[NSNumber numberWithInt:requestID]];
+    
+    __weak typeof(self) weakSelf = self;
+    [request addDownloadProgressChangedHandler:^(MKNetworkRequest* completedRequest){
+        switch (completedRequest.state) {
             case MKNKRequestStateCompleted: {
                 JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
                 operationResponse.request = completedRequest;
@@ -115,6 +185,7 @@
         [response setContent:responseDict];
     }
     
+    response.progress = operationResponse.request.progress;
     [response setStatus:JCNetworkResponseStatusSuccess];
     [self dispatchResponse:response forElement:element];
 }
@@ -126,7 +197,8 @@
     
     JCNetworkResponse *response = [[JCNetworkResponse alloc] init];
     [response setRequestID:operationResponse.requestID];
-    [response setContent:operationResponse.request.error];
+    [response setError:operationResponse.request.error];
+    [response setContent:nil];
     [response setStatus:JCNetworkResponseStatusFailed];
     [response setError:error];
     
@@ -134,9 +206,9 @@
 }
 
 //factory method returen different products request queue
-- (MKNetworkHost *)createHostEngineWithRequestObj:(JCRequestObj *)requestObj {
-    if (requestObj) {
-        MKNetworkHost *hostEngine = [[MKNetworkHost alloc] initWithHostName:requestObj.hostName];
+- (MKNetworkHost *)createHostEngineWithRequestHostName:(NSString *)hostName {
+    if (hostName) {
+        MKNetworkHost *hostEngine = [[MKNetworkHost alloc] initWithHostName:hostName];
         return hostEngine;
     }
     return nil;

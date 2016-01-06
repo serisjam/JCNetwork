@@ -567,6 +567,12 @@
 		EB52E8F51C3BB5CA00329186 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					armv7s,
+					armv6s,
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -577,6 +583,7 @@
 				INFOPLIST_FILE = JCNetwork/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -591,6 +598,12 @@
 		EB52E8F61C3BB5CA00329186 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					armv7s,
+					armv6s,
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -601,6 +614,7 @@
 				INFOPLIST_FILE = JCNetwork/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -651,6 +665,7 @@
 				EB52E8F61C3BB5CA00329186 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EB52E8F71C3BB5CA00329186 /* Build configuration list for PBXNativeTarget "JCNetworkTests" */ = {
 			isa = XCConfigurationList;
@@ -659,6 +674,7 @@
 				EB52E8F91C3BB5CA00329186 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

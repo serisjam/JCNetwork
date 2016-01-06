@@ -9,6 +9,7 @@
 #import "JCRequester.h"
 #import "DispatchElement.h"
 #import "MKNetworkRequest+JCNetwork.h"
+#import "UIImageView+MKNKAdditions.h"
 
 @implementation JCRequester
 
@@ -38,31 +39,157 @@
 #pragma mark request block
 
 - (JCRequestID)httpGetWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withCompleteBlock:(JCNetworkResponseBlock)responedBlock {
-    return [self httpSendRequesWithRequest:requestObj entityClass:entityName withCompleteBlock:responedBlock httpMethod:@"GET"];
-}
-
-- (JCRequestID)httpPostWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withCompleteBlock:(JCNetworkResponseBlock)responedBlock {
-    return [self httpSendRequesWithRequest:requestObj entityClass:entityName withCompleteBlock:responedBlock httpMethod:@"POST"];
-}
-
-- (JCRequestID)httpSendRequesWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withCompleteBlock:(JCNetworkResponseBlock)responedBlock httpMethod:(NSString *)method {
     if (++_lastRequestID >= JC_MAX_REQUESTID) {
         _lastRequestID = JC_MIN_REQUESTID;
     }
     
-    //get different products MKNetworkEngine queue
-    if ([[_requestEngines allKeys] indexOfObject:[requestObj hostName]] == NSNotFound) {
-        [_requestEngines setObject:[_dispatcher createHostEngineWithRequestObj:requestObj] forKey:[requestObj hostName]];
+    MKNetworkHost *hostEngine = [self getNetworkHostEngineWithRequest:requestObj];
+    MKNetworkRequest *hostRequest = [self createRequesWithRequest:requestObj andHostEngine:hostEngine httpMethod:@"GET"];
+    
+    [self addDispatchElementWithCompleteBlock:responedBlock withHostRequest:hostRequest entityClass:entityName withHostName:requestObj.hostName];
+    
+    [hostEngine startRequest:hostRequest];
+    
+    return _lastRequestID;
+}
+
+- (JCRequestID)httpPostWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withCompleteBlock:(JCNetworkResponseBlock)responedBlock {
+    if (++_lastRequestID >= JC_MAX_REQUESTID) {
+        _lastRequestID = JC_MIN_REQUESTID;
     }
     
-    MKNetworkHost *hostEngine = [_requestEngines objectForKey:[requestObj hostName]];
+    MKNetworkHost *hostEngine = [self getNetworkHostEngineWithRequest:requestObj];
+    MKNetworkRequest *hostRequest = [self createRequesWithRequest:requestObj andHostEngine:hostEngine httpMethod:@"POST"];
+    
+    [self addDispatchElementWithCompleteBlock:responedBlock withHostRequest:hostRequest entityClass:entityName withHostName:requestObj.hostName];
+    
+    [hostEngine startRequest:hostRequest];
+    
+    return _lastRequestID;
+}
+
+#pragma mark upload request
+- (JCRequestID)httpPostFile:(JCRequestObj *)requestObj files:(NSDictionary *)files entityClass:(NSString *)entityName withUpLoadBlock:(JCNetworkResponseBlock)upLoadBlock {
+    if (++_lastRequestID >= JC_MAX_REQUESTID) {
+        _lastRequestID = JC_MIN_REQUESTID;
+    }
+    
+    MKNetworkHost *hostEngine = [self getNetworkHostEngineWithRequest:requestObj];
+    MKNetworkRequest *hostRequest = [self createRequesWithRequest:requestObj andHostEngine:hostEngine httpMethod:@"POST"];
+    NSArray *keys = [files allKeys];
+    for (NSString *item in keys) {
+        [hostRequest attachFile:[files objectForKey:item] forKey:item mimeType:@"application/octet-stream"];
+    }
+    
+    [hostRequest setRequestID:_lastRequestID];
+    DispatchElement *element = [[DispatchElement alloc] init];
+    element.requestID = _lastRequestID;
+    element.responseBlock = upLoadBlock;
+    element.hostName = requestObj.hostName;
+    element.entityClassName = entityName;
+    element.request = hostRequest;
+    [_dispatcher addDispatchUploadItem:element];
+    
+    [hostEngine startUploadRequest:hostRequest];
+    
+    return _lastRequestID;
+}
+
+#pragma mark download request
+- (JCRequestID)downloadFileFrom:(NSURL *)remoteURL toFile:(NSString*)filePath withDownLoadBlock:(JCNetworkResponseBlock)responedBlock {
+    if (++_lastRequestID >= JC_MAX_REQUESTID) {
+        _lastRequestID = JC_MIN_REQUESTID;
+    }
+    
+    MKNetworkHost *hostEngine = [self getNetworkHostEngineWithRequestURL:remoteURL];
+    MKNetworkRequest *hostRequest = [hostEngine requestWithURLString:[remoteURL absoluteString]];
+    
+    [hostRequest setRequestID:_lastRequestID];
+    [hostRequest setDownloadPath:filePath];
+    
+    DispatchElement *element = [[DispatchElement alloc] init];
+    element.requestID = _lastRequestID;
+    element.responseBlock = responedBlock;
+    element.hostName = remoteURL.host;
+    element.entityClassName = nil;
+    element.request = hostRequest;
+    [_dispatcher addDispatchDownloadItem:element];
+    
+    [hostEngine startDownloadRequest:hostRequest];
+    
+    return _lastRequestID;
+}
+
+//image request
+- (void)autoLoadImageWithURL:(NSURL *)imageURL placeHolderImage:(UIImage*)image toImageView:(UIImageView *)imageView {
+    
+    if ([[_requestEngines allKeys] indexOfObject:@"image"] == NSNotFound) {
+        [_requestEngines setObject:[[MKNetworkHost alloc] init] forKey:@"image"];
+    }
+    
+    MKNetworkHost *hostEngine = [_requestEngines objectForKey:@"image"];
+    [UIImageView changeImageHostEngine:hostEngine];
+    
+    if (image) {
+        imageView.image = image;
+        
+        [imageView loadImageFromURLString:imageURL.absoluteString placeHolderImage:image animated:YES];
+        return ;
+    }
+    
+    [imageView loadImageFromURLString:imageURL.absoluteString];
+}
+
+- (void)loadImageWithURL:(NSURL *)imageURL size:(CGSize)size completionHandler:(JCNetworkImageFetch)imageFetchBlock {
+    if ([[_requestEngines allKeys] indexOfObject:@"image"] == NSNotFound) {
+        [_requestEngines setObject:[[MKNetworkHost alloc] init] forKey:@"image"];
+    }
+    
+    MKNetworkHost *hostEngine = [_requestEngines objectForKey:@"image"];
+    MKNetworkRequest *hostRequest = [hostEngine requestWithURLString:imageURL.absoluteString];
+    
+    [hostRequest addCompletionHandler:^(MKNetworkRequest* completedRequest){
+        if(completedRequest.responseAvailable) {
+            UIImage *decompressedImage;
+            if (CGSizeEqualToSize(size, CGSizeZero)) {
+                decompressedImage = [completedRequest responseAsImage];
+            } else {
+               decompressedImage = [completedRequest decompressedResponseImageOfSize:size];
+            }
+            imageFetchBlock(decompressedImage, completedRequest.isCachedResponse);
+            return ;
+        }
+        imageFetchBlock(nil, NO);
+    }];
+}
+
+- (UIImage *)getImageIfExisted:(NSURL *)imageURL {
+    if ([[_requestEngines allKeys] indexOfObject:@"image"] == NSNotFound) {
+        [_requestEngines setObject:[[MKNetworkHost alloc] init] forKey:@"image"];
+    }
+    
+    MKNetworkHost *hostEngine = [_requestEngines objectForKey:@"image"];
+    MKNetworkRequest *hostRequest = [hostEngine requestWithURLString:imageURL.absoluteString];
+    
+    return hostRequest.responseAsImage;
+}
+
+#pragma cancelRequest
+
+- (void)cancelRequest:(JCRequestID)requestID {
+    [_dispatcher cancelRequest:requestID];
+}
+
+#pragma mark createRequestWithEngine
+
+- (MKNetworkRequest *)createRequesWithRequest:(JCRequestObj *)requestObj andHostEngine:(MKNetworkHost *)hostEngine httpMethod:(NSString *)method {
+    
     MKNetworkRequest *request = [hostEngine requestWithPath:requestObj.path params:[self bulidRequestParamsWithRequest:requestObj] httpMethod:method];
     
     request.alwaysCache = requestObj.alwaysCache;
     request.alwaysLoad = requestObj.alwaysLoad;
     request.ignoreCache = requestObj.ignoreCache;
     request.doNotCache = requestObj.doNotCache;
-    [request setRequestID:_lastRequestID];
     
     switch (requestObj.parameterType) {
         case JCNetworkParameterTypeURL:
@@ -78,23 +205,44 @@
             break;
     }
     
+    return request;
+}
+
+#pragma mark AddElement to Dispatch
+
+- (void)addDispatchElementWithCompleteBlock:(JCNetworkResponseBlock)responedBlock withHostRequest:(MKNetworkRequest *)hostRequest entityClass:(NSString *)entityName withHostName:(NSString *)hostName {
+    
+    [hostRequest setRequestID:_lastRequestID];
     DispatchElement *element = [[DispatchElement alloc] init];
     element.requestID = _lastRequestID;
     element.responseBlock = responedBlock;
-    element.hostName = requestObj.hostName;
+    element.hostName = hostName;
     element.entityClassName = entityName;
-    element.request = request;
+    element.request = hostRequest;
     [_dispatcher addDispatchItem:element];
     
-    [hostEngine startRequest:request];
-    
-    return _lastRequestID;
 }
 
-#pragma cancelRequest
+#pragma mark get MKNetworkEngine queue
 
-- (void)cancelRequest:(JCRequestID)requestID {
-    [_dispatcher cancelRequest:requestID];
+- (MKNetworkHost *)getNetworkHostEngineWithRequest:(JCRequestObj *)requestObj {
+    //get different products MKNetworkEngine queue
+    if ([[_requestEngines allKeys] indexOfObject:[requestObj hostName]] == NSNotFound) {
+        [_requestEngines setObject:[_dispatcher createHostEngineWithRequestHostName:requestObj.hostName] forKey:[requestObj hostName]];
+    }
+    
+    return [_requestEngines objectForKey:[requestObj hostName]];
+}
+
+- (MKNetworkHost *)getNetworkHostEngineWithRequestURL:(NSURL *)remoteURL {
+
+    if ([[_requestEngines allKeys] indexOfObject:remoteURL.host] == NSNotFound) {
+        [_requestEngines setObject:[_dispatcher createHostEngineWithRequestHostName:remoteURL.host] forKey:remoteURL.host];
+    }
+    
+    return [_requestEngines objectForKey:remoteURL.host];
+    
+    return nil;
 }
 
 #pragma mark bulid RequestParams
@@ -109,8 +257,6 @@
     [paramsDict removeObjectForKey:@"alwaysCache"];
     [paramsDict removeObjectForKey:@"ignoreCache"];
     [paramsDict removeObjectForKey:@"alwaysLoad"];
-    
-    NSLog(@"%@", paramsDict);
     
     return paramsDict;
 }

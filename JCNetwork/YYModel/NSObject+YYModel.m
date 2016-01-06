@@ -501,7 +501,6 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
     if ([cls respondsToSelector:@selector(modelCustomPropertyMapper)]) {
         NSDictionary *customMapper = [(id <YYModel>)cls modelCustomPropertyMapper];
         [customMapper enumerateKeysAndObjectsUsingBlock:^(NSString *propertyName, NSString *mappedToKey, BOOL *stop) {
-            NSLog(@"%@, %@", propertyName, mappedToKey);
             _YYModelPropertyMeta *propertyMeta = allPropertyMetas[propertyName];
             if (!propertyMeta) return;
             [allPropertyMetas removeObjectForKey:propertyName];

@@ -12,6 +12,7 @@
 
 @synthesize requestID;
 @synthesize status;
+@synthesize progress;
 @synthesize content;
 @synthesize error;
 

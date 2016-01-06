@@ -188,7 +188,7 @@ NSString *const kMKCacheDefaultDirectoryName = @"com.mknetworkkit.mkcache";
   
   if(!methodImplemented) {
     
-    NSLog(@"application:handleEventsForBackgroundURLSession:completionHandler: is not implemented in your application delegate. Download tasks might not work properly. Implement the method and set the completionHandler value to MKNetworkHost's backgroundSessionCompletionHandler");
+    NSLog(@"application:handleEventsForBackgroundURLSession:completionHandler: is not implemented in your application delegate. Download tasks might not work properly. Implement the method and set the completionHandler value to JCNetwork backgroundSessionCompletionHandler");
   }
   
   if(!request || !request.request) {
@@ -369,8 +369,6 @@ NSString *const kMKCacheDefaultDirectoryName = @"com.mknetworkkit.mkcache";
                                  ssl:(BOOL) useSSL {
   
   if(self.hostName == nil) {
-    
-    NSLog(@"Hostname is nil, use requestWithURLString: method to create absolute URL operations");
     return nil;
   }
   

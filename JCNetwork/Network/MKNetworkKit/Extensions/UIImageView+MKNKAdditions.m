@@ -26,6 +26,12 @@ const float kFreshLoadAnimationDuration = 0.25f;
   [imageHost enableCache];
 }
 
++(void)changeImageHostEngine:(MKNetworkHost *)hostEngine {
+    if (imageHost != hostEngine) {
+        imageHost = hostEngine;
+    }
+}
+
 +(MKNetworkRequest*) cacheImageFromURLString:(NSString*) imageUrlString {
   
   return [UIImageView cacheImageFromURLString:imageUrlString decompressedImageSize:CGSizeZero];

@@ -12,6 +12,7 @@
 
 @interface UIImageView (MKNKAdditions)
 
++(void)changeImageHostEngine:(MKNetworkHost *)hostEngine;
 +(MKNetworkRequest*) cacheImageFromURLString:(NSString*) imageUrlString;
 -(MKNetworkRequest*) loadImageFromURLString:(NSString*) imageUrlString;
 -(MKNetworkRequest*) loadImageFromURLString:(NSString*) imageUrlString placeHolderImage:(UIImage*) placeHolderImage animated:(BOOL) animated;
