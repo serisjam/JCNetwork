@@ -157,7 +157,6 @@
 }
 
 - (DispatchElement *)getDispatchElement:(JCRequestID)requestID {
-    
     id dispatchOperation = [_dispatchTable objectForKey:[NSNumber numberWithInt:requestID]];
     
     if (dispatchOperation) {

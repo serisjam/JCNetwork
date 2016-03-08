@@ -11,6 +11,7 @@
 #import "MKNetworkRequest+JCNetwork.h"
 #import "UIImageView+MKNKAdditions.h"
 
+
 @implementation JCRequester
 
 + (id)sharedInstance
@@ -58,7 +59,6 @@
     if (++_lastRequestID >= JC_MAX_REQUESTID) {
         _lastRequestID = JC_MIN_REQUESTID;
     }
-    
     MKNetworkHost *hostEngine = [self getNetworkHostEngineWithRequest:requestObj];
     MKNetworkRequest *hostRequest = [self createRequesWithRequest:requestObj andHostEngine:hostEngine httpMethod:@"POST"];
     
@@ -71,11 +71,9 @@
 
 #pragma mark upload request
 - (JCRequestID)upLoadFileWithRequest:(JCRequestObj *)requestObj files:(NSDictionary *)files entityClass:(NSString *)entityName withUpLoadBlock:(JCNetworkResponseBlock)upLoadBlock {
-    
     if (++_lastRequestID >= JC_MAX_REQUESTID) {
         _lastRequestID = JC_MIN_REQUESTID;
     }
-    
     MKNetworkHost *hostEngine = [self getNetworkHostEngineWithRequest:requestObj];
     MKNetworkRequest *hostRequest = [self createRequesWithRequest:requestObj andHostEngine:hostEngine httpMethod:@"POST"];
     NSArray *keys = [files allKeys];
@@ -99,11 +97,10 @@
 
 #pragma mark download request
 - (JCRequestID)downLoadFileFrom:(NSURL *)remoteURL toFile:(NSString*)filePath withDownLoadBlock:(JCNetworkResponseBlock)responedBlock {
-    
     if (++_lastRequestID >= JC_MAX_REQUESTID) {
         _lastRequestID = JC_MIN_REQUESTID;
     }
-    
+
     MKNetworkHost *hostEngine = [self getNetworkHostEngineWithRequestURL:remoteURL];
     MKNetworkRequest *hostRequest = [hostEngine requestWithURLString:[remoteURL absoluteString]];
     
