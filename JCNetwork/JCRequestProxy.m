@@ -35,8 +35,6 @@
     return self;
 }
 
-<<<<<<< HEAD
-
 #pragma mark request
 - (JCRequestID)httpGetWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withCompleteBlock:(JCNetworkResponseBlock)responedBlock {
     if (!requestObj || ![requestObj hostName]) {
