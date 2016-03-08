@@ -25,7 +25,6 @@ typedef NS_ENUM (NSInteger, JCNetworkResponseStatus) {
 };
 
 //请求发送格式
-
 typedef NS_ENUM (NSInteger, JCNetworkParameterType) {
     JCNetworkParameterTypeURL = 0,
     JCNetworkParameterTypeJSON = 1,
