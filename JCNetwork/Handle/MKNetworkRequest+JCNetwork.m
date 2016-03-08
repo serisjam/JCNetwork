@@ -14,7 +14,7 @@ static const char *kJCNetworkRequestID;
 @implementation MKNetworkRequest (JCNetwork)
 
 - (void)setRequestID:(JCRequestID)requestID {
-    objc_setAssociatedObject(self, kJCNetworkRequestID, [NSNumber numberWithInt:requestID], OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, kJCNetworkRequestID, [NSNumber numberWithInt:requestID], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (JCRequestID)getRequestID {

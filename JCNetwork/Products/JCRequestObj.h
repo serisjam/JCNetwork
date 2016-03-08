@@ -13,6 +13,7 @@
 
 @property (assign, nonatomic) JCNetworkParameterType parameterType;
 @property (strong, nonatomic) NSDictionary *headerDictionary;
+@property (strong, nonatomic) NSDictionary *paramsDic;
 @property (strong, nonatomic) NSString *hostName;
 @property (strong, nonatomic) NSString *path;
 

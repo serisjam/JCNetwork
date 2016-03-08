@@ -30,6 +30,7 @@
     if (self) {
         _requestEngines = [[NSMutableDictionary alloc] init];
         _dispatcher = [JCDispatcher sharedInstance];
+        
         _lastRequestID = JC_MIN_REQUESTID;
     }
     
@@ -69,7 +70,8 @@
 }
 
 #pragma mark upload request
-- (JCRequestID)httpPostFile:(JCRequestObj *)requestObj files:(NSDictionary *)files entityClass:(NSString *)entityName withUpLoadBlock:(JCNetworkResponseBlock)upLoadBlock {
+- (JCRequestID)upLoadFileWithRequest:(JCRequestObj *)requestObj files:(NSDictionary *)files entityClass:(NSString *)entityName withUpLoadBlock:(JCNetworkResponseBlock)upLoadBlock {
+    
     if (++_lastRequestID >= JC_MAX_REQUESTID) {
         _lastRequestID = JC_MIN_REQUESTID;
     }
@@ -96,7 +98,8 @@
 }
 
 #pragma mark download request
-- (JCRequestID)downloadFileFrom:(NSURL *)remoteURL toFile:(NSString*)filePath withDownLoadBlock:(JCNetworkResponseBlock)responedBlock {
+- (JCRequestID)downLoadFileFrom:(NSURL *)remoteURL toFile:(NSString*)filePath withDownLoadBlock:(JCNetworkResponseBlock)responedBlock {
+    
     if (++_lastRequestID >= JC_MAX_REQUESTID) {
         _lastRequestID = JC_MIN_REQUESTID;
     }
@@ -269,6 +272,11 @@
 #pragma mark bulid RequestParams
 
 - (NSDictionary *)bulidRequestParamsWithRequest:(JCRequestObj *)requestObj {
+    
+    if ([[requestObj.paramsDic allKeys] count] != 0) {
+        return requestObj.paramsDic;
+    }
+    
     NSMutableDictionary *paramsDict = [NSMutableDictionary dictionaryWithDictionary:[requestObj yy_modelToJSONObject]];
     //删除不必要的属性
     [paramsDict removeObjectForKey:@"hostName"];

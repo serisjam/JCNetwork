@@ -52,6 +52,13 @@
                 [weakSelf requestFinished:operationResponse];
             }
                 break;
+            case MKNKRequestStateCancelled: {
+                JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
+                operationResponse.request = completedRequest;
+                operationResponse.requestID = completedRequest.getRequestID;
+                [weakSelf requestFailed:operationResponse withError:completedRequest.error];
+            }
+                break;
             case MKNKRequestStateCompleted: {
                 JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
                 operationResponse.request = completedRequest;
@@ -67,7 +74,6 @@
             }
                 break;
             default: {
-                [weakSelf cancelRequest:completedRequest.getRequestID];
             }
                 break;
         }
@@ -81,28 +87,36 @@
     [_dispatchTable setObject:item forKey:[NSNumber numberWithInt:requestID]];
     
     __weak typeof(self) weakSelf = self;
-    [request addUploadProgressChangedHandler:^(MKNetworkRequest* completedRequest){
-        switch (completedRequest.state) {
-            case MKNKRequestStateCompleted: {
-                JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
-                operationResponse.request = completedRequest;
-                operationResponse.requestID = completedRequest.getRequestID;
-                [weakSelf requestFinished:operationResponse];
-            }
-                break;
-            case MKNKRequestStateError: {
-                JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
-                operationResponse.request = completedRequest;
-                operationResponse.requestID = completedRequest.getRequestID;
-                [weakSelf requestFailed:operationResponse withError:completedRequest.error];
-            }
-                break;
-            default: {
-                [weakSelf cancelRequest:completedRequest.getRequestID];
-            }
-                break;
-        }
+    
+    [request addCompletionHandler:^(MKNetworkRequest* completedRequest){
+        JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
+        operationResponse.request = completedRequest;
+        operationResponse.requestID = completedRequest.getRequestID;
+        [weakSelf requestFinished:operationResponse];
     }];
+    
+//    [request addDownloadProgressChangedHandler:^(MKNetworkRequest* completedRequest){
+//        switch (completedRequest.state) {
+//            case MKNKRequestStateStarted: {
+//                JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
+//                operationResponse.request = completedRequest;
+//                operationResponse.requestID = completedRequest.getRequestID;
+//                [weakSelf requestUploading:operationResponse];
+//            }
+//                break;
+//            case MKNKRequestStateError: {
+//                JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
+//                operationResponse.request = completedRequest;
+//                operationResponse.requestID = completedRequest.getRequestID;
+//                [weakSelf requestFailed:operationResponse withError:completedRequest.error];
+//            }
+//                break;
+//            default: {
+//                [weakSelf cancelRequest:completedRequest.getRequestID];
+//            }
+//                break;
+//        }
+//    }];
 }
 
 - (void)addDispatchDownloadItem:(DispatchElement *)item {
@@ -112,29 +126,38 @@
     [_dispatchTable setObject:item forKey:[NSNumber numberWithInt:requestID]];
     
     __weak typeof(self) weakSelf = self;
-    [request addDownloadProgressChangedHandler:^(MKNetworkRequest* completedRequest){
-        switch (completedRequest.state) {
-            case MKNKRequestStateStarted: {
-                JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
-                operationResponse.request = completedRequest;
-                operationResponse.requestID = completedRequest.getRequestID;
-                [weakSelf requestDowning:operationResponse];
-            }
-                break;
-            case MKNKRequestStateError: {
-                JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
-                operationResponse.request = completedRequest;
-                operationResponse.requestID = completedRequest.getRequestID;
-                [weakSelf requestFailed:operationResponse withError:completedRequest.error];
-            }
-                break;
-            default:
-                break;
-        }
+    
+    [request addCompletionHandler:^(MKNetworkRequest* completedRequest){
+        JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
+        operationResponse.request = completedRequest;
+        operationResponse.requestID = completedRequest.getRequestID;
+        [weakSelf requestFinished:operationResponse];
     }];
+    
+//    [request addDownloadProgressChangedHandler:^(MKNetworkRequest* completedRequest){
+//        switch (completedRequest.state) {
+//            case MKNKRequestStateStarted: {
+//                JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
+//                operationResponse.request = completedRequest;
+//                operationResponse.requestID = completedRequest.getRequestID;
+//                [weakSelf requestDowning:operationResponse];
+//            }
+//                break;
+//            case MKNKRequestStateError: {
+//                JCOperationResponse *operationResponse = [[JCOperationResponse alloc] init];
+//                operationResponse.request = completedRequest;
+//                operationResponse.requestID = completedRequest.getRequestID;
+//                [weakSelf requestFailed:operationResponse withError:completedRequest.error];
+//            }
+//                break;
+//            default:
+//                break;
+//        }
+//    }];
 }
 
 - (DispatchElement *)getDispatchElement:(JCRequestID)requestID {
+    
     id dispatchOperation = [_dispatchTable objectForKey:[NSNumber numberWithInt:requestID]];
     
     if (dispatchOperation) {
@@ -146,8 +169,8 @@
 - (void)cancelRequest:(JCRequestID)requestID {
     DispatchElement *element = [_dispatchTable objectForKey:[NSNumber numberWithInt:requestID]];
     if (element) {
+        NSLog(@"request cancel");
         [element.request cancel];
-        [_dispatchTable removeObjectForKey:[NSNumber numberWithInt:requestID]];
     }
 }
 
@@ -174,15 +197,26 @@
     JCNetworkResponse *response = [self handRequestResponsed:operationResponse];
     response.content = nil;
     response.progress = operationResponse.request.progress;
-    [response setStatus:JCNetworkResponseStatusSuccess];
+    [response setStatus:JCNetworkResponseStatusDowning];
     
     if (element.responseBlock) {
         element.responseBlock(response);
     }
+}
+
+- (void)requestUploading:(JCOperationResponse *)operationResponse {
+    DispatchElement *element = [_dispatchTable objectForKey:[NSNumber numberWithInt:[operationResponse requestID]]];
+    if (!element) {
+        return ;
+    }
     
-    if (operationResponse.request.progress >= 1.0f) {
-        // remove dispatch item from dispatch table
-        [_dispatchTable removeObjectForKey:[NSNumber numberWithInt:element.requestID]];
+    JCNetworkResponse *response = [self handRequestResponsed:operationResponse];
+    response.content = nil;
+    response.progress = operationResponse.request.progress;
+    [response setStatus:JCNetworkResponseStatusUploading];
+    
+    if (element.responseBlock) {
+        element.responseBlock(response);
     }
 }
 
@@ -194,6 +228,7 @@
     
     NSDictionary *responseDict = [operationResponse.request responseAsJSON];
     JCNetworkResponse *response = [self handRequestResponsed:operationResponse];
+    response.progress = operationResponse.request.progress;
     
     if ([element entityClassName] != nil) {
         Class cls = NSClassFromString(element.entityClassName);
@@ -235,6 +270,7 @@
         MKNetworkHost *hostEngine = [[MKNetworkHost alloc] initWithHostName:hostName];
         return hostEngine;
     }
+    
     return nil;
 }
 

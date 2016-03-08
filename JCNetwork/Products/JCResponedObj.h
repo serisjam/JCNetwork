@@ -10,7 +10,12 @@
 
 @interface JCResponedObj : NSObject
 
++ (instancetype)modelWithDictionary:(NSDictionary *)dictionary;
+
 + (NSDictionary *)modelCustomPropertyMapper;
 + (NSDictionary *)modelContainerPropertyGenericClass;
+
+- (id)modelToJSONObject;
+
 
 @end

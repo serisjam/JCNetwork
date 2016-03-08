@@ -52,6 +52,8 @@ NSString *const kMKCacheDefaultDirectoryName = @"com.mknetworkkit.mkcache";
 @property (readonly) NSURLSession *ephemeralSession;
 @property (readonly) NSURLSession *backgroundSession;
 
+@property (readonly) NSURLSession *uploadSession;
+
 @property MKCache *dataCache;
 @property MKCache *responseCache;
 
@@ -67,9 +69,14 @@ NSString *const kMKCacheDefaultDirectoryName = @"com.mknetworkkit.mkcache";
   static NSURLSessionConfiguration *backgroundSessionConfiguration;
   static NSURLSession *backgroundSession;
   dispatch_once(&onceToken, ^{
-    backgroundSessionConfiguration =
-    [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:
-     [[NSBundle mainBundle] bundleIdentifier]];
+      if ([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending) {
+          backgroundSessionConfiguration =
+          [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:
+           [[NSBundle mainBundle] bundleIdentifier]];
+      } else {
+          backgroundSessionConfiguration =
+          [NSURLSessionConfiguration defaultSessionConfiguration];
+      }
     
     if([self.delegate respondsToSelector:@selector(networkHost:didCreateBackgroundSessionConfiguration:)]) {
       [self.delegate networkHost:self didCreateBackgroundSessionConfiguration:backgroundSessionConfiguration];
@@ -81,6 +88,21 @@ NSString *const kMKCacheDefaultDirectoryName = @"com.mknetworkkit.mkcache";
   });
   
   return backgroundSession;
+}
+
+- (NSURLSession *) uploadSession {
+    static dispatch_once_t onceToken;
+    static NSURLSessionConfiguration *uploadSessionConfiguration;
+    static NSURLSession *uploadSession;
+    dispatch_once(&onceToken, ^{
+        uploadSessionConfiguration =
+        [NSURLSessionConfiguration defaultSessionConfiguration];
+        
+        uploadSession = [NSURLSession sessionWithConfiguration:uploadSessionConfiguration
+                                                          delegate:self
+                                                     delegateQueue:[[NSOperationQueue alloc] init]];
+    });
+    return uploadSession;
 }
 
 -(NSURLSession*) defaultSession {
@@ -167,9 +189,26 @@ NSString *const kMKCacheDefaultDirectoryName = @"com.mknetworkkit.mkcache";
              @"Request is nil, check your URL and other parameters you use to build your request");
     return;
   }
-  
-  request.task = [self.backgroundSession uploadTaskWithRequest:request.request
-                                                      fromData:request.multipartFormData];
+    @try{
+        request.task = [self.uploadSession uploadTaskWithRequest:request.request
+                                                        fromData:request.multipartFormData
+                                               completionHandler:^(NSData *data, NSURLResponse *response, NSError *error){
+                                                   request.responseData = data;
+                                                   request.response = (NSHTTPURLResponse *)response;
+                                                   request.error = error;
+                                                   if(error) {
+                                                       request.state = MKNKRequestStateError;
+                                                   } else {
+                                                       request.state = MKNKRequestStateCompleted;
+                                                   }
+                                               }];
+    }
+    @catch(NSException *exception) {
+        NSLog(@"exception:%@", exception);
+    }
+    @finally {
+    }
+
   dispatch_sync(self.runningTasksSynchronizingQueue, ^{
     [self.activeTasks addObject:request];
   });
@@ -487,12 +526,10 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
 didCompleteWithError:(NSError *)error {
-  
   __block MKNetworkRequest *matchingRequest = nil;
   [self.activeTasks enumerateObjectsUsingBlock:^(MKNetworkRequest *request, NSUInteger idx, BOOL *stop) {
-    
-    if([request.task isEqual:task]) {
       
+    if([request.task isEqual:task]) {
       request.responseData = nil;
       request.response = (NSHTTPURLResponse*) task.response;
       request.error = error;

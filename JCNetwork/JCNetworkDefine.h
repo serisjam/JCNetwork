@@ -18,6 +18,9 @@ typedef unsigned int JCRequestID;
 //请求响应的状态
 typedef NS_ENUM (NSInteger, JCNetworkResponseStatus) {
     JCNetworkResponseStatusSuccess,
+    JCNetworkResponseStatusDowning,
+    JCNetworkResponseStatusUploading,
+    JCNetworkResponseCancelled,
     JCNetworkResponseStatusFailed
 };
 

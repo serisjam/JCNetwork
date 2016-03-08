@@ -4,7 +4,6 @@
 //
 //  Created by Jam on 16/1/5.
 //  Copyright © 2016年 Jam. All rights reserved.
-//
 
 #import "JCRequestProxy.h"
 #import "JCRequester.h"
@@ -36,6 +35,7 @@
     return self;
 }
 
+<<<<<<< HEAD
 
 #pragma mark request
 - (JCRequestID)httpGetWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withCompleteBlock:(JCNetworkResponseBlock)responedBlock {
@@ -54,15 +54,14 @@
     return [_requester httpPostWithRequest:requestObj entityClass:entityName withCompleteBlock:responedBlock];
 }
 
-- (JCRequestID)httpPostFile:(JCRequestObj *)requestObj files:(NSDictionary *)files entityClass:(NSString *)entityName withUpLoadBlock:(JCNetworkResponseBlock)upLoadBlock {
+- (JCRequestID)upLoadFileWithRequest:(JCRequestObj *)requestObj files:(NSDictionary *)files entityClass:(NSString *)entityName withUpLoadBlock:(JCNetworkResponseBlock)upLoadBlock {
     if (!requestObj || ![requestObj hostName]) {
         return JC_ERROR_REQUESTID;
     }
-    
-    return [_requester httpPostFile:requestObj files:files entityClass:entityName withUpLoadBlock:upLoadBlock];
+    return [_requester upLoadFileWithRequest:requestObj files:files entityClass:entityName withUpLoadBlock:upLoadBlock];
 }
 
-- (JCRequestID)downloadFileFrom:(NSURL *)remoteURL toFile:(NSString*)filePath withDownLoadBlock:(JCNetworkResponseBlock)responedBlock {
+- (JCRequestID)downLoadFileFrom:(NSURL *)remoteURL toFile:(NSString*)filePath withDownLoadBlock:(JCNetworkResponseBlock)responedBlock {
     if (!remoteURL) {
         return JC_ERROR_REQUESTID;
     }
@@ -71,7 +70,7 @@
         [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
     }
     
-    return [_requester downloadFileFrom:remoteURL toFile:filePath withDownLoadBlock:responedBlock];
+    return [_requester downLoadFileFrom:remoteURL toFile:filePath withDownLoadBlock:responedBlock];
 }
 
 #pragma mark ImageRequest
@@ -103,4 +102,5 @@
 - (void)cancelRequestID:(JCRequestID)requestID {
     [_requester cancelRequest:requestID];
 }
+
 @end
