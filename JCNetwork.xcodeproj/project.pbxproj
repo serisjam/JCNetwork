@@ -21,21 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		0D89C9D31D3E7532008A4D4E /* JCAppsService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D89C9C71D3E7532008A4D4E /* JCAppsService.h */; };
-		0D89C9D41D3E7532008A4D4E /* JCAppsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D89C9C81D3E7532008A4D4E /* JCAppsService.m */; };
-		0D89C9D51D3E7532008A4D4E /* JCBaseService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D89C9C91D3E7532008A4D4E /* JCBaseService.h */; };
-		0D89C9D61D3E7532008A4D4E /* JCBaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D89C9CA1D3E7532008A4D4E /* JCBaseService.m */; };
-		0D89C9D71D3E7532008A4D4E /* JCDownLoadService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D89C9CB1D3E7532008A4D4E /* JCDownLoadService.h */; };
-		0D89C9D81D3E7532008A4D4E /* JCDownLoadService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D89C9CC1D3E7532008A4D4E /* JCDownLoadService.m */; };
-		0D89C9D91D3E7532008A4D4E /* JCEstateBookService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D89C9CD1D3E7532008A4D4E /* JCEstateBookService.h */; };
-		0D89C9DA1D3E7532008A4D4E /* JCEstateBookService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D89C9CE1D3E7532008A4D4E /* JCEstateBookService.m */; };
-		0D89C9DB1D3E7532008A4D4E /* JCHouseService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D89C9CF1D3E7532008A4D4E /* JCHouseService.h */; };
-		0D89C9DC1D3E7532008A4D4E /* JCHouseService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D89C9D01D3E7532008A4D4E /* JCHouseService.m */; };
-		0D89C9DD1D3E7532008A4D4E /* JCImageService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D89C9D11D3E7532008A4D4E /* JCImageService.h */; };
-		0D89C9DE1D3E7532008A4D4E /* JCImageService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D89C9D21D3E7532008A4D4E /* JCImageService.m */; };
-		0D89C9E21D3E7542008A4D4E /* JCServiceHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D89C9DF1D3E7542008A4D4E /* JCServiceHeader.h */; };
-		0D89C9E31D3E7542008A4D4E /* JCZhaofangtongService.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D89C9E01D3E7542008A4D4E /* JCZhaofangtongService.h */; };
-		0D89C9E41D3E7542008A4D4E /* JCZhaofangtongService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D89C9E11D3E7542008A4D4E /* JCZhaofangtongService.m */; };
 		EB52E8E41C3BB5CA00329186 /* JCNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = EB52E8E31C3BB5CA00329186 /* JCNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EB52E8EB1C3BB5CA00329186 /* JCNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB52E8E01C3BB5CA00329186 /* JCNetwork.framework */; };
 		EB52E8F01C3BB5CA00329186 /* JCNetworkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB52E8EF1C3BB5CA00329186 /* JCNetworkTests.m */; };
@@ -103,21 +88,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0D89C9C71D3E7532008A4D4E /* JCAppsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppsService.h; sourceTree = "<group>"; };
-		0D89C9C81D3E7532008A4D4E /* JCAppsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppsService.m; sourceTree = "<group>"; };
-		0D89C9C91D3E7532008A4D4E /* JCBaseService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBaseService.h; sourceTree = "<group>"; };
-		0D89C9CA1D3E7532008A4D4E /* JCBaseService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBaseService.m; sourceTree = "<group>"; };
-		0D89C9CB1D3E7532008A4D4E /* JCDownLoadService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDownLoadService.h; sourceTree = "<group>"; };
-		0D89C9CC1D3E7532008A4D4E /* JCDownLoadService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDownLoadService.m; sourceTree = "<group>"; };
-		0D89C9CD1D3E7532008A4D4E /* JCEstateBookService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCEstateBookService.h; sourceTree = "<group>"; };
-		0D89C9CE1D3E7532008A4D4E /* JCEstateBookService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCEstateBookService.m; sourceTree = "<group>"; };
-		0D89C9CF1D3E7532008A4D4E /* JCHouseService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHouseService.h; sourceTree = "<group>"; };
-		0D89C9D01D3E7532008A4D4E /* JCHouseService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHouseService.m; sourceTree = "<group>"; };
-		0D89C9D11D3E7532008A4D4E /* JCImageService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCImageService.h; sourceTree = "<group>"; };
-		0D89C9D21D3E7532008A4D4E /* JCImageService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCImageService.m; sourceTree = "<group>"; };
-		0D89C9DF1D3E7542008A4D4E /* JCServiceHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCServiceHeader.h; sourceTree = "<group>"; };
-		0D89C9E01D3E7542008A4D4E /* JCZhaofangtongService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCZhaofangtongService.h; sourceTree = "<group>"; };
-		0D89C9E11D3E7542008A4D4E /* JCZhaofangtongService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCZhaofangtongService.m; sourceTree = "<group>"; };
 		EB52E8E01C3BB5CA00329186 /* JCNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JCNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB52E8E31C3BB5CA00329186 /* JCNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCNetwork.h; sourceTree = "<group>"; };
 		EB52E8E51C3BB5CA00329186 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -325,21 +295,6 @@
 		EB52E91E1C3BB62700329186 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0D89C9C71D3E7532008A4D4E /* JCAppsService.h */,
-				0D89C9C81D3E7532008A4D4E /* JCAppsService.m */,
-				0D89C9C91D3E7532008A4D4E /* JCBaseService.h */,
-				0D89C9CA1D3E7532008A4D4E /* JCBaseService.m */,
-				0D89C9CB1D3E7532008A4D4E /* JCDownLoadService.h */,
-				0D89C9CC1D3E7532008A4D4E /* JCDownLoadService.m */,
-				0D89C9CD1D3E7532008A4D4E /* JCEstateBookService.h */,
-				0D89C9CE1D3E7532008A4D4E /* JCEstateBookService.m */,
-				0D89C9CF1D3E7532008A4D4E /* JCHouseService.h */,
-				0D89C9D01D3E7532008A4D4E /* JCHouseService.m */,
-				0D89C9D11D3E7532008A4D4E /* JCImageService.h */,
-				0D89C9D21D3E7532008A4D4E /* JCImageService.m */,
-				0D89C9DF1D3E7542008A4D4E /* JCServiceHeader.h */,
-				0D89C9E01D3E7542008A4D4E /* JCZhaofangtongService.h */,
-				0D89C9E11D3E7542008A4D4E /* JCZhaofangtongService.m */,
 				EB52E9631C3BCE5900329186 /* JCRequestObj.h */,
 				EB52E9641C3BCE5900329186 /* JCRequestObj.m */,
 				EB52E9671C3BCE8A00329186 /* JCResponedObj.h */,
@@ -373,18 +328,13 @@
 				EB52E94E1C3BB65F00329186 /* JCNetworkDefine.h in Headers */,
 				EB52E94F1C3BB65F00329186 /* JCNetworkResponse.h in Headers */,
 				EB52E9281C3BB62700329186 /* JCRequester.h in Headers */,
-				0D89C9DD1D3E7532008A4D4E /* JCImageService.h in Headers */,
 				EB52E9261C3BB62700329186 /* JCDispatcher.h in Headers */,
 				EB52E94D1C3BB65F00329186 /* JCNetwork-Prefix.pch in Headers */,
 				EB52E93F1C3BB62700329186 /* MKNetworkRequest.h in Headers */,
 				EB52E8E41C3BB5CA00329186 /* JCNetwork.h in Headers */,
 				EB52E9341C3BB62700329186 /* NSString+MKNKAdditions.h in Headers */,
-				0D89C9E31D3E7542008A4D4E /* JCZhaofangtongService.h in Headers */,
-				0D89C9D91D3E7532008A4D4E /* JCEstateBookService.h in Headers */,
 				EB52E9611C3BBD3A00329186 /* MKNetworkRequest+JCNetwork.h in Headers */,
 				EB52E92E1C3BB62700329186 /* NSDictionary+MKNKAdditions.h in Headers */,
-				0D89C9D71D3E7532008A4D4E /* JCDownLoadService.h in Headers */,
-				0D89C9DB1D3E7532008A4D4E /* JCHouseService.h in Headers */,
 				EB52E9411C3BB62700329186 /* MKObject.h in Headers */,
 				EB52E9431C3BB62700329186 /* NSObject+YYModel.h in Headers */,
 				EB52E9321C3BB62700329186 /* NSMutableDictionary+MKNKAdditions.h in Headers */,
@@ -393,12 +343,9 @@
 				EB52E92C1C3BB62700329186 /* NSDate+RFC1123.h in Headers */,
 				EB52E95D1C3BBA8900329186 /* JCOperationResponse.h in Headers */,
 				EB52E9241C3BB62700329186 /* DispatchElement.h in Headers */,
-				0D89C9D31D3E7532008A4D4E /* JCAppsService.h in Headers */,
-				0D89C9E21D3E7542008A4D4E /* JCServiceHeader.h in Headers */,
 				EB52E9361C3BB62700329186 /* UIAlertView+MKNKAdditions.h in Headers */,
 				EB52E9301C3BB62700329186 /* NSHTTPURLResponse+MKNKAdditions.h in Headers */,
 				EB52E93E1C3BB62700329186 /* MKNetworkKit.h in Headers */,
-				0D89C9D51D3E7532008A4D4E /* JCBaseService.h in Headers */,
 				EB52E93C1C3BB62700329186 /* MKNetworkHost.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,20 +466,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D89C9E41D3E7542008A4D4E /* JCZhaofangtongService.m in Sources */,
 				EB52E9251C3BB62700329186 /* DispatchElement.m in Sources */,
 				EB52E9421C3BB62700329186 /* MKObject.m in Sources */,
-				0D89C9D81D3E7532008A4D4E /* JCDownLoadService.m in Sources */,
-				0D89C9DC1D3E7532008A4D4E /* JCHouseService.m in Sources */,
-				0D89C9D41D3E7532008A4D4E /* JCAppsService.m in Sources */,
-				0D89C9D61D3E7532008A4D4E /* JCBaseService.m in Sources */,
 				EB52E92F1C3BB62700329186 /* NSDictionary+MKNKAdditions.m in Sources */,
 				EB52E9441C3BB62700329186 /* NSObject+YYModel.m in Sources */,
 				EB52E9621C3BBD3A00329186 /* MKNetworkRequest+JCNetwork.m in Sources */,
 				EB52E9401C3BB62700329186 /* MKNetworkRequest.m in Sources */,
 				EB52E9661C3BCE5900329186 /* JCRequestObj.m in Sources */,
 				EB52E95E1C3BBA8900329186 /* JCOperationResponse.m in Sources */,
-				0D89C9DE1D3E7532008A4D4E /* JCImageService.m in Sources */,
 				EB52E9371C3BB62700329186 /* UIAlertView+MKNKAdditions.m in Sources */,
 				EB52E96A1C3BCE8A00329186 /* JCResponedObj.m in Sources */,
 				EB52E9521C3BB65F00329186 /* JCRequestProxy.m in Sources */,
@@ -547,7 +488,6 @@
 				EB52E92D1C3BB62700329186 /* NSDate+RFC1123.m in Sources */,
 				EB52E9291C3BB62700329186 /* JCRequester.m in Sources */,
 				EB52E9461C3BB62700329186 /* YYClassInfo.m in Sources */,
-				0D89C9DA1D3E7532008A4D4E /* JCEstateBookService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
