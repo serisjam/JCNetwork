@@ -20,18 +20,13 @@
 + (id)sharedInstance;
 - (id)init;
 
-- (void)addDispatchItem:(DispatchElement *)item;
+- (void)addGetDispatchItem:(DispatchElement *)item;
+- (void)addPostDispatchItem:(DispatchElement *)item;
 - (void)addDispatchUploadItem:(DispatchElement *)item;
 - (void)addDispatchDownloadItem:(DispatchElement *)item;
 
 - (void)cancelRequest:(JCRequestID)requestID;
 
-//根据requestID获取分发Item
-- (DispatchElement *)getDispatchElement:(JCRequestID)requestID;
-
 - (void)dispatchResponse:(JCNetworkResponse *)response forElement:(DispatchElement *)element;
-
-//factory method
-- (MKNetworkHost *)createHostEngineWithRequestHostName:(NSString *)hostName;
 
 @end

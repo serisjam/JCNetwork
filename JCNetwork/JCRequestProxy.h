@@ -14,8 +14,9 @@ typedef void(^JCNetworkImageFetch)(UIImage *fetchImage, BOOL isCache);
 
 @interface JCRequestProxy : NSObject
 
-+ (id)sharedInstance;
-- (id)init;
++ (instancetype)sharedInstance;
+
+- (instancetype)init;
 
 // Get Request
 - (JCRequestID)httpGetWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withCompleteBlock:(JCNetworkResponseBlock)responedBlock;

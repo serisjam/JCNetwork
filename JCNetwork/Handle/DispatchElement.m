@@ -12,9 +12,9 @@
 
 @synthesize requestID = _requestID;
 @synthesize responseBlock = _responseBlock;
-@synthesize hostName = _hostName;
 @synthesize entityClassName = _entityClassName;
 @synthesize request = _request;
+
 
 - (id)init {
     self = [super init];

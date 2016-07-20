@@ -13,9 +13,9 @@
 
 @property (nonatomic, assign) JCRequestID requestID;
 @property (nonatomic, copy) JCNetworkResponseBlock responseBlock;
-@property (nonatomic, strong) NSString *hostName;
+@property (nonatomic, assign) JCRequest *request;
 @property (nonatomic, strong) NSString *entityClassName;
-@property (nonatomic, assign) MKNetworkRequest *request;
+
 
 - (id)init;
 

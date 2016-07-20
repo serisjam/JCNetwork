@@ -11,9 +11,11 @@
 
 #import <Foundation/Foundation.h>
 #import "MKNetworkKit.h"
+#import "AFNetworking.h"
 #import "JCNetworkDefine.h"
 #import "JCNetworkResponse.h"
 #import "JCRequestObj.h"
+#import "JCRequest.h"
 #import "NSObject+YYModel.h"
 
 #endif /* JCNetwork_Prefix_pch */

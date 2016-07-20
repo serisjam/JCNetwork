@@ -16,7 +16,7 @@
 
 @implementation JCRequestProxy
 
-+ (id)sharedInstance {
++ (instancetype)sharedInstance {
     static dispatch_once_t pred;
     static JCRequestProxy *sharedInstance = nil;
     dispatch_once(&pred, ^{
@@ -25,7 +25,7 @@
     return sharedInstance;
 }
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
     
     if (self) {
