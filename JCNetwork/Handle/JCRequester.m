@@ -46,10 +46,6 @@
         _lastRequestID = JC_MIN_REQUESTID;
     }
     
-    JCRequest *request = [[JCRequest alloc] initWithRequestObj:requestObj];
-    DispatchElement *element = [self getDispatchElementWithPostCompleteBlock:responedBlock WithRequest:request entityClass:entityName];
-    [_dispatcher addGetDispatchItem:element];
-    
     return _lastRequestID;
 }
 
@@ -59,7 +55,7 @@
     }
     
     JCRequest *request = [[JCRequest alloc] initWithRequestObj:requestObj];
-    DispatchElement *element = [self getDispatchElementWithPostCompleteBlock:responedBlock WithRequest:request entityClass:entityName];
+    DispatchElement *element = [self getDispatchElementWithCompleteBlock:responedBlock WithRequest:request entityClass:entityName];
     [_dispatcher addPostDispatchItem:element];
     
     return _lastRequestID;
@@ -165,7 +161,7 @@
 
 #pragma mark bulid DispatchElement
 
-- (DispatchElement *)getDispatchElementWithPostCompleteBlock:(JCNetworkResponseBlock)responedBlock WithRequest:(JCRequest *)request entityClass:(NSString *)entityName {
+- (DispatchElement *)getDispatchElementWithCompleteBlock:(JCNetworkResponseBlock)responedBlock WithRequest:(JCRequest *)request entityClass:(NSString *)entityName {
     
     DispatchElement *element = [[DispatchElement alloc] init];
     element.requestID = _lastRequestID;
