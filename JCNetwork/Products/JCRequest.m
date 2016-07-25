@@ -10,10 +10,6 @@
 
 @implementation JCRequest
 
-- (void)dealloc {
-    NSLog(@"JCRequest dealloc");
-}
-
 - (instancetype)init {
     self = [super init];
     
