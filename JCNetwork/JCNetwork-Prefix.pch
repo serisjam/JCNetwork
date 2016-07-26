@@ -10,7 +10,6 @@
 #define JCNetwork_Prefix_pch
 
 #import <Foundation/Foundation.h>
-#import "MKNetworkKit.h"
 #import "AFNetworking.h"
 #import "JCNetworkDefine.h"
 #import "JCNetworkResponse.h"
