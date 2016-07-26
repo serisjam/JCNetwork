@@ -10,8 +10,8 @@
 #import "DispatchElement.h"
 
 #import "AFNetworking.h"
-
-#import "UIImageView+MKNKAdditions.h"
+#import "AFImageDownloader.h"
+#import "UIImageView+AFNetworking.h"
 
 @implementation JCRequester
 
@@ -81,73 +81,36 @@
 
 //image request
 - (void)autoLoadImageWithURL:(NSURL *)imageURL placeHolderImage:(UIImage*)image toImageView:(UIImageView *)imageView {
-    
-    if ([[_requestEngines allKeys] indexOfObject:@"image"] == NSNotFound) {
-        [_requestEngines setObject:[[MKNetworkHost alloc] init] forKey:@"image"];
-    }
-    
-    MKNetworkHost *hostEngine = [_requestEngines objectForKey:@"image"];
-    [UIImageView changeImageHostEngine:hostEngine];
-    
-    if (image) {
-        imageView.image = image;
-        
-        [imageView loadImageFromURLString:imageURL.absoluteString placeHolderImage:image animated:YES];
-        return ;
-    }
-    
-    [imageView loadImageFromURLString:imageURL.absoluteString];
+    [imageView setImageWithURL:imageURL placeholderImage:image];
 }
 
-- (void)loadImageWithURL:(NSURL *)imageURL size:(CGSize)size completionHandler:(JCNetworkImageFetch)imageFetchBlock {
-    if ([[_requestEngines allKeys] indexOfObject:@"image"] == NSNotFound) {
-        MKNetworkHost *engineNetwork = [[MKNetworkHost alloc] init];
-        [engineNetwork enableCache];
-        [_requestEngines setObject:engineNetwork forKey:@"image"];
+- (void)loadImageWithURL:(NSURL *)imageURL completionHandler:(JCNetworkImageFetch)imageFetchBlock {
+    UIImage *cachedImage = [self getImageIfExisted:imageURL];
+    
+    if (cachedImage) {
+        imageFetchBlock(cachedImage, YES);
+        return ;
     }
-    
-    MKNetworkHost *hostEngine = [_requestEngines objectForKey:@"image"];
-    MKNetworkRequest *hostRequest = [hostEngine requestWithURLString:imageURL.absoluteString];
-    hostRequest.alwaysCache = YES;
-    
-    [hostRequest addCompletionHandler:^(MKNetworkRequest* completedRequest){
-        if(completedRequest.responseAvailable) {
-            UIImage *decompressedImage;
-            if (CGSizeEqualToSize(size, CGSizeZero)) {
-                decompressedImage = [completedRequest responseAsImage];
-            } else {
-               decompressedImage = [completedRequest decompressedResponseImageOfSize:size];
-            }
-            imageFetchBlock(decompressedImage, completedRequest.isCachedResponse);
-            return ;
-        }
-        
-        if (completedRequest.state == MKNKRequestStateError) {
-            imageFetchBlock(nil, NO);
-        }
+    AFImageDownloader *downloader = [AFImageDownloader defaultInstance];
+    NSMutableURLRequest *imageURLRequest = [NSMutableURLRequest requestWithURL:imageURL];
+    [imageURLRequest addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+    [downloader downloadImageForURLRequest:imageURLRequest success:^(NSURLRequest * request, NSHTTPURLResponse * responed, UIImage * image){
+        imageFetchBlock(image, NO);
+    } failure:^(NSURLRequest * request, NSHTTPURLResponse * responed, NSError * error){
+        imageFetchBlock(nil, NO);
     }];
-    [hostEngine startRequest:hostRequest];
 }
 
 - (UIImage *)getImageIfExisted:(NSURL *)imageURL {
-    if ([[_requestEngines allKeys] indexOfObject:@"image"] == NSNotFound) {
-        MKNetworkHost *engineNetwork = [[MKNetworkHost alloc] init];
-        [engineNetwork enableCache];
-        [_requestEngines setObject:engineNetwork forKey:@"image"];
-    }
     
-    MKNetworkHost *hostEngine = [_requestEngines objectForKey:@"image"];
-    MKNetworkRequest *hostRequest = [hostEngine requestWithURLString:imageURL.absoluteString];
+    AFImageDownloader *downloader = [AFImageDownloader defaultInstance];
+    id <AFImageRequestCache> imageCache = downloader.imageCache;
+    NSMutableURLRequest *imageURLRequest = [NSMutableURLRequest requestWithURL:imageURL];
+    [imageURLRequest addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+    UIImage *cachedImage = [imageCache imageforRequest:imageURLRequest withAdditionalIdentifier:nil];
     
-    NSData *cacheData = [hostEngine getCacheDataWithRequest:hostRequest];
-    
-    if (cacheData) {
-        static CGFloat scale = 2.0f;
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            scale = [UIScreen mainScreen].scale;
-        });
-        return [UIImage imageWithData:cacheData scale:scale];
+    if (cachedImage) {
+        return cachedImage;
     }
     
     return nil;

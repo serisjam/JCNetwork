@@ -80,11 +80,11 @@
     return [_requester autoLoadImageWithURL:imageURL placeHolderImage:image toImageView:imageView];
 }
 
-- (void)loadImageWithURL:(NSURL *)imageURL size:(CGSize)size completionHandler:(JCNetworkImageFetch)imageFetchBlock {
+- (void)loadImageWithURL:(NSURL *)imageURL completionHandler:(JCNetworkImageFetch)imageFetchBlock {
     if (!imageURL) {
         return;
     }
-    return [_requester loadImageWithURL:imageURL size:size completionHandler:imageFetchBlock];
+    return [_requester loadImageWithURL:imageURL completionHandler:imageFetchBlock];
 }
 
 - (UIImage *)getImageIfExisted:(NSURL *)imageURL {

@@ -35,7 +35,7 @@
 
 //image request
 - (void)autoLoadImageWithURL:(NSURL *)imageURL placeHolderImage:(UIImage*)image toImageView:(UIImageView *)imageView;
-- (void)loadImageWithURL:(NSURL *)imageURL size:(CGSize)size completionHandler:(JCNetworkImageFetch)imageFetchBlock;
+- (void)loadImageWithURL:(NSURL *)imageURL completionHandler:(JCNetworkImageFetch)imageFetchBlock;
 - (UIImage *)getImageIfExisted:(NSURL *)imageURL;
 
 //cancelRequest with RequestID
