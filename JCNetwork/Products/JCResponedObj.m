@@ -7,6 +7,7 @@
 //
 
 #import "JCResponedObj.h"
+#import "NSObject+YYModel.h"
 
 @implementation JCResponedObj
 

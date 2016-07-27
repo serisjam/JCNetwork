@@ -20,7 +20,6 @@ typedef NS_ENUM (NSInteger, JCNetworkResponseStatus) {
     JCNetworkResponseStatusSuccess,
     JCNetworkResponseStatusDowning,
     JCNetworkResponseStatusUploading,
-    JCNetworkResponseCancelled,
     JCNetworkResponseStatusFailed
 };
 
@@ -28,7 +27,7 @@ typedef NS_ENUM (NSInteger, JCNetworkResponseStatus) {
 typedef NS_ENUM (NSInteger, JCNetworkParameterType) {
     JCNetworkParameterTypeURL = 0,
     JCNetworkParameterTypeJSON = 1,
-    JCNetworkParameterTypelist = 2
+    JCNetworkParameterTypeList = 2
 };
 
 #endif

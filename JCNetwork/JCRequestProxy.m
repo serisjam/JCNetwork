@@ -16,7 +16,7 @@
 
 @implementation JCRequestProxy
 
-+ (id)sharedInstance {
++ (instancetype)sharedInstance {
     static dispatch_once_t pred;
     static JCRequestProxy *sharedInstance = nil;
     dispatch_once(&pred, ^{
@@ -25,7 +25,7 @@
     return sharedInstance;
 }
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
     
     if (self) {
@@ -80,11 +80,11 @@
     return [_requester autoLoadImageWithURL:imageURL placeHolderImage:image toImageView:imageView];
 }
 
-- (void)loadImageWithURL:(NSURL *)imageURL size:(CGSize)size completionHandler:(JCNetworkImageFetch)imageFetchBlock {
+- (void)loadImageWithURL:(NSURL *)imageURL completionHandler:(JCNetworkImageFetch)imageFetchBlock {
     if (!imageURL) {
         return;
     }
-    return [_requester loadImageWithURL:imageURL size:size completionHandler:imageFetchBlock];
+    return [_requester loadImageWithURL:imageURL completionHandler:imageFetchBlock];
 }
 
 - (UIImage *)getImageIfExisted:(NSURL *)imageURL {

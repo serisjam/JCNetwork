@@ -14,8 +14,9 @@ typedef void(^JCNetworkImageFetch)(UIImage *fetchImage, BOOL isCache);
 
 @interface JCRequestProxy : NSObject
 
-+ (id)sharedInstance;
-- (id)init;
++ (instancetype)sharedInstance;
+
+- (instancetype)init;
 
 // Get Request
 - (JCRequestID)httpGetWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withCompleteBlock:(JCNetworkResponseBlock)responedBlock;
@@ -31,7 +32,7 @@ typedef void(^JCNetworkImageFetch)(UIImage *fetchImage, BOOL isCache);
 
 //Image请求
 - (void)autoLoadImageWithURL:(NSURL *)imageURL placeHolderImage:(UIImage*)image toImageView:(UIImageView *)imageView;
-- (void)loadImageWithURL:(NSURL *)imageURL size:(CGSize)size completionHandler:(JCNetworkImageFetch)imageFetchBlock;
+- (void)loadImageWithURL:(NSURL *)imageURL completionHandler:(JCNetworkImageFetch)imageFetchBlock;
 - (UIImage *)getImageIfExisted:(NSURL *)imageURL;
 
 // 根据请求ID取消一个请求

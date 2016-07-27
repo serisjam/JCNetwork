@@ -22,4 +22,8 @@
     return self;
 }
 
+- (NSDictionary *)handlerParamsDic:(NSDictionary *)orginParamsDic {
+    return orginParamsDic;
+}
+
 @end
