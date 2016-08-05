@@ -35,6 +35,9 @@ typedef void(^JCNetworkImageFetch)(UIImage *fetchImage, BOOL isCache);
 - (void)loadImageWithURL:(NSURL *)imageURL completionHandler:(JCNetworkImageFetch)imageFetchBlock;
 - (UIImage *)getImageIfExisted:(NSURL *)imageURL;
 
+//返回的json解密
+
+
 // 根据请求ID取消一个请求
 - (void)cancelRequestID:(JCRequestID)requestID;
 
