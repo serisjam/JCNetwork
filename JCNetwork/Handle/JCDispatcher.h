@@ -22,7 +22,7 @@
 
 - (void)addGetDispatchItem:(DispatchElement *)item;
 - (void)addPostDispatchItem:(DispatchElement *)item;
-- (void)addDispatchUploadItem:(DispatchElement *)item;
+- (void)addDispatchUploadItem:(DispatchElement *)item withFiles:(NSDictionary *)files;
 - (void)addDispatchDownloadItem:(DispatchElement *)item;
 
 - (void)cancelRequest:(JCRequestID)requestID;

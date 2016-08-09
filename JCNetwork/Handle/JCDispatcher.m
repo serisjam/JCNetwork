@@ -34,6 +34,20 @@
 #pragma mark - Handle dispatch
 
 - (void)addGetDispatchItem:(DispatchElement *)item {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [item.request requestSerializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [self cancelRequest:item.requestID];
+    
+    __weak typeof(self) weakSelf = self;
+    NSURLSessionDataTask *task = [manager GET:item.request.URLString parameters:item.request.paramsDic progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
+        [weakSelf requestFinished:responseObject withDispatchElement:item];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [weakSelf requestFailed:error withDispatchElement:item];
+    }];
+    
+    [_dispatchTable setObject:task forKey:[NSNumber numberWithInt:item.requestID]];
 }
 
 - (void)addPostDispatchItem:(DispatchElement *)item {
@@ -50,6 +64,27 @@
         [weakSelf requestFailed:error withDispatchElement:item];
     }];
     
+    [_dispatchTable setObject:task forKey:[NSNumber numberWithInt:item.requestID]];
+}
+
+- (void)addDispatchUploadItem:(DispatchElement *)item withFiles:(NSDictionary *)files {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [item.request requestSerializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [self cancelRequest:item.requestID];
+    
+    __weak typeof(self) weakSelf = self;
+    NSURLSessionDataTask *task = [manager POST:item.request.URLString parameters:item.request.paramsDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        for (NSString *key in [files allKeys]) {
+            [formData appendPartWithFileData:[files objectForKey:key] name:key fileName:key mimeType:@"image/jpeg"];
+        }
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [weakSelf requestFinished:responseObject withDispatchElement:item];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [weakSelf requestFailed:error withDispatchElement:item];
+    }];
     [_dispatchTable setObject:task forKey:[NSNumber numberWithInt:item.requestID]];
 }
 
