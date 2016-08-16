@@ -77,7 +77,7 @@
     __weak typeof(self) weakSelf = self;
     NSURLSessionDataTask *task = [manager POST:item.request.URLString parameters:item.request.paramsDic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         for (NSString *key in [files allKeys]) {
-            [formData appendPartWithFileData:[files objectForKey:key] name:key fileName:key mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:[files objectForKey:key] name:key fileName:key mimeType:@"application/octet-stream"];
         }
     } progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
