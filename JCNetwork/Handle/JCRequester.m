@@ -46,6 +46,10 @@
         _lastRequestID = JC_MIN_REQUESTID;
     }
     
+    JCRequest *request = [[JCRequest alloc] initWithRequestObj:requestObj];
+    DispatchElement *element = [self getDispatchElementWithCompleteBlock:responedBlock WithRequest:request entityClass:entityName];
+    [_dispatcher addGetDispatchItem:element];
+    
     return _lastRequestID;
 }
 
