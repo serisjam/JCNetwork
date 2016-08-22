@@ -46,6 +46,10 @@
         _lastRequestID = JC_MIN_REQUESTID;
     }
     
+    JCRequest *request = [[JCRequest alloc] initWithRequestObj:requestObj];
+    DispatchElement *element = [self getDispatchElementWithCompleteBlock:responedBlock WithRequest:request entityClass:entityName];
+    [_dispatcher addGetDispatchItem:element];
+    
     return _lastRequestID;
 }
 
@@ -66,7 +70,9 @@
     if (++_lastRequestID >= JC_MAX_REQUESTID) {
         _lastRequestID = JC_MIN_REQUESTID;
     }
-    
+    JCRequest *request = [[JCRequest alloc] initWithRequestObj:requestObj];
+    DispatchElement *element = [self getDispatchElementWithCompleteBlock:upLoadBlock WithRequest:request entityClass:entityName];
+    [_dispatcher addDispatchUploadItem:element withFiles:files];
     return _lastRequestID;
 }
 

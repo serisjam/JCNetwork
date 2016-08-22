@@ -36,16 +36,12 @@
 
 - (NSDictionary *)bulidRequestParamsWithRequest:(JCRequestObj *)requestObj {
     
-    if ([[requestObj.paramsDic allKeys] count] != 0) {
-        return requestObj.paramsDic;
-    }
-    
     NSMutableDictionary *paramsDict = [NSMutableDictionary dictionaryWithDictionary:[requestObj yy_modelToJSONObject]];
-    paramsDict = [NSMutableDictionary dictionaryWithDictionary:[requestObj handlerParamsDic:paramsDict]];
     //删除不必要的属性
     [paramsDict removeObjectForKey:@"hostName"];
     [paramsDict removeObjectForKey:@"path"];
     [paramsDict removeObjectForKey:@"parameterType"];
+    paramsDict = [NSMutableDictionary dictionaryWithDictionary:[requestObj handlerParamsDic:paramsDict]];
     
     return paramsDict;
 }
