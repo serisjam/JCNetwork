@@ -14,6 +14,7 @@
 
 @property (nonatomic, readonly, strong) NSString *URLString;
 @property (nonatomic, readonly, strong) NSDictionary *paramsDic;
+@property (nonatomic, assign) NSTimeInterval timeoutInterval;
 @property (nonatomic, readonly, strong) AFHTTPRequestSerializer<AFURLRequestSerialization> *requestSerializer;
 
 - (instancetype)initWithRequestObj:(JCRequestObj *)requestObj;

@@ -36,6 +36,7 @@
 - (void)addGetDispatchItem:(DispatchElement *)item {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [item.request requestSerializer];
+    manager.requestSerializer.timeoutInterval = item.request.timeoutInterval;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [self cancelRequest:item.requestID];
@@ -53,6 +54,7 @@
 - (void)addPostDispatchItem:(DispatchElement *)item {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [item.request requestSerializer];
+    manager.requestSerializer.timeoutInterval = item.request.timeoutInterval;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [self cancelRequest:item.requestID];

@@ -18,6 +18,7 @@
     
     if (self) {
         self.parameterType = JCNetworkParameterTypeURL;
+        self.timeoutInterval = 60.0;
     }
     return self;
 }

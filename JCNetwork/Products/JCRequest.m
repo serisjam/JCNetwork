@@ -27,6 +27,7 @@
         _paramsDic = [self bulidRequestParamsWithRequest:requestObj];
         _URLString = [self getURLStringWithRequest:requestObj];
         _requestSerializer = [self getRequestSerializeWithRequest:requestObj];
+        _timeoutInterval = requestObj.timeoutInterval;
     }
     
     return self;
