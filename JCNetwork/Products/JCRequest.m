@@ -27,6 +27,7 @@
         _paramsDic = [self bulidRequestParamsWithRequest:requestObj];
         _URLString = [self getURLStringWithRequest:requestObj];
         _requestSerializer = [self getRequestSerializeWithRequest:requestObj];
+        _timeoutInterval = requestObj.timeoutInterval;
     }
     
     return self;
@@ -41,6 +42,7 @@
     [paramsDict removeObjectForKey:@"hostName"];
     [paramsDict removeObjectForKey:@"path"];
     [paramsDict removeObjectForKey:@"parameterType"];
+    [paramsDict removeObjectForKey:@"timeoutInterval"];
     paramsDict = [NSMutableDictionary dictionaryWithDictionary:[requestObj handlerParamsDic:paramsDict]];
     
     return paramsDict;
