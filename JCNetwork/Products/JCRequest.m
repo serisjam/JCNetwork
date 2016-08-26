@@ -41,6 +41,7 @@
     [paramsDict removeObjectForKey:@"hostName"];
     [paramsDict removeObjectForKey:@"path"];
     [paramsDict removeObjectForKey:@"parameterType"];
+    [paramsDict removeObjectForKey:@"timeoutInterval"];
     paramsDict = [NSMutableDictionary dictionaryWithDictionary:[requestObj handlerParamsDic:paramsDict]];
     
     return paramsDict;
