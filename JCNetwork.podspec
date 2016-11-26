@@ -34,7 +34,7 @@ Pod::Spec.new do |s|
   #   'JCNetwork' => ['JCNetwork/Assets/*.png']
   # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
+  s.public_header_files = 'JCNetwork/Classes/*.h'
   s.frameworks = 'UIKit', 'ImageIO', 'Security', 'CFNetwork', 'SystemConfiguration'
   s.dependency 'AFNetworking'
   s.dependency 'YYModel'
