@@ -1,0 +1,15 @@
+source 'https://github.com/SerilesJam/Specs.git'
+
+use_frameworks!
+
+target 'JCNetwork_Example' do
+  pod 'JCNetwork', :path => '../'
+
+  target 'JCNetwork_Tests' do
+    inherit! :search_paths
+
+  pod 'Specta'
+  pod 'Expecta'
+  pod 'Expecta+Snapshots'
+  end
+end
