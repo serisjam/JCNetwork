@@ -35,6 +35,7 @@ Pod::Spec.new do |s|
   pch_JCNetwork      = <<-EOS
                         #import "AFNetworking.h"
                         #import "NSObject+YYModel.h"
+                        #import "YYCache.h"
                        EOS
   s.prefix_header_contents = pch_JCNetwork
 
@@ -50,7 +51,20 @@ Pod::Spec.new do |s|
     ss.dependency 'JCNetwork/Define'
   end
 
-  s.frameworks = 'UIKit'
+  s.subspec 'Handle' do |ss|
+    ss.source_files = 'JCNetwork/Classes/Handle/*'
+
+    ss.dependency 'JCNetwork/Products'
+  end
+
+  s.subspec 'Service' do |ss|
+    ss.source_files = 'JCNetwork/Classes/Service/*'
+    ss.public_header_files = 'JCNetwork/Classes/Service/JCRequestProxy.h'
+
+    ss.dependency 'JCNetwork/Handle'
+  end
+
+  s.frameworks = 'UIKit', 'ImageIO', 'Security', 'CFNetwork', 'SystemConfiguration'
   s.dependency 'AFNetworking'
   s.dependency 'YYModel'
   s.dependency 'YYCache'
