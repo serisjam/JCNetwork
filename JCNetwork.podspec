@@ -30,20 +30,11 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '7.0'
 
   s.source_files = 'JCNetwork/Classes/JCNetwork.h'
-
-  # s.resource_bundles = {
-  #   'JCNetwork' => ['JCNetwork/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'JCNetwork/Classes/*.h'
+  s.public_header_files = 'JCNetwork/Classes/JCNetwork.h'
 
   pch_JCNetwork      = <<-EOS
-                        #import "AFNetworking.h"
                         #import "NSObject+YYModel.h"
-                        #import "JCNetworkDefine.h"
-                        #import "JCNetworkResponse.h"
-                        EOS
-
+                       EOS
   s.prefix_header_contents = pch_JCNetwork
 
   s.subspec 'Define' do |ss|
@@ -55,11 +46,11 @@ Pod::Spec.new do |s|
     ss.source_files = 'JCNetwork/Classes/Products/*'
     ss.public_header_files = 'JCNetwork/Classes/Products/*.h'
 
+    ss.dependency 'AFNetworking'
     ss.dependency 'JCNetwork/Define'
   end
 
   s.frameworks = 'UIKit'
-  s.dependency 'AFNetworking'
   s.dependency 'YYModel'
   s.dependency 'YYCache'
 

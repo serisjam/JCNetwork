@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 Jam. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "JCNetworkDefine.h"
 
 @interface JCNetworkResponse : NSObject
 
