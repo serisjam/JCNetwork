@@ -38,7 +38,10 @@ Pod::Spec.new do |s|
   # s.public_header_files = 'JCNetwork/Classes/**/*.h'
 
   pch_JCNetwork      = <<-EOS
+                        #import "AFNetworking.h"
                         #import "JCNetworkDefine.h"
+                        #import "JCRequestObj.h"
+                        #import "JCResponedObj.h"
                         EOS
 
   s.prefix_header_contents = pch_JCNetwork
