@@ -39,6 +39,7 @@ Pod::Spec.new do |s|
 
   pch_JCNetwork      = <<-EOS
                         #import "AFNetworking.h"
+                        #import "NSObject+YYModel.h"
                         #import "JCNetworkDefine.h"
                         #import "JCRequestObj.h"
                         #import "JCResponedObj.h"
