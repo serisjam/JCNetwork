@@ -29,13 +29,13 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '7.0'
 
-  s.source_files = 'JCNetwork/Classes/**/*'
-  
+  s.source_files = 'JCNetwork/Classes/JC{Network, NetworkDefine, NetworkResponse}.{h,m}'
+
   # s.resource_bundles = {
   #   'JCNetwork' => ['JCNetwork/Assets/*.png']
   # }
 
-  # s.public_header_files = 'JCNetwork/Classes/**/*.h'
+  s.public_header_files = 'JCNetwork/Classes/JC{Network, NetworkDefine, NetworkResponse}.h'
 
   pch_JCNetwork      = <<-EOS
                         #import "AFNetworking.h"
