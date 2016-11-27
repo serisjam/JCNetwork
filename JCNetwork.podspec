@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'JCNetwork'
   s.version          = '0.9'
-  s.summary          = 'JCNetwork是一套基于AFNetworking实现的http网络请求.'
+  s.summary          = 'JCNetwork是一套基于AFNetworking实现的http网络请求'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { '贾淼' => 'hxjiamiao@126.com' }
   s.source           = { :git => 'https://github.com/SerilesJam/JCNetwork.git', :tag => s.version.to_s }
+  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '7.0'
 
@@ -34,8 +35,8 @@ Pod::Spec.new do |s|
   #   'JCNetwork' => ['JCNetwork/Assets/*.png']
   # }
 
-  s.public_header_files = 'JCNetwork/Classes/*.h'
-  s.frameworks = 'UIKit', 'ImageIO', 'Security', 'CFNetwork', 'SystemConfiguration'
+  # s.public_header_files = 'JCNetwork/Classes/**/*.h'
+  s.frameworks = 'UIKit'
   s.dependency 'AFNetworking'
   s.dependency 'YYModel'
   s.dependency 'YYCache'
