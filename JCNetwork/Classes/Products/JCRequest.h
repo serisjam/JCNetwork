@@ -6,7 +6,6 @@
 //  Copyright © 2016年 Jam. All rights reserved.
 //
 
-#import "AFNetworking.h"
 #import "JCNetworkDefine.h"
 #import "JCRequestObj.h"
 
