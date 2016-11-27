@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'JCNetwork'
-  s.version          = '0.9'
+  s.version          = '1.0'
   s.summary          = 'JCNetwork是一套基于AFNetworking实现的http网络请求'
 
 # This description is used to generate tags and improve search results.
