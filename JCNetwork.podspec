@@ -51,6 +51,13 @@ Pod::Spec.new do |s|
     ss.public_header_files = 'JCNetwork/Classes/Define/*.h'
   end
 
+  s.subspec 'Products' do |ss|
+    ss.source_files = 'JCNetwork/Classes/Products/*'
+    ss.public_header_files = 'JCNetwork/Classes/Products/*.h'
+
+    ss.dependency 'JCNetwork/Define'
+  end
+
   s.frameworks = 'UIKit'
   s.dependency 'AFNetworking'
   s.dependency 'YYModel'
