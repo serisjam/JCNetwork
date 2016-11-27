@@ -35,7 +35,7 @@ Pod::Spec.new do |s|
   #   'JCNetwork' => ['JCNetwork/Assets/*.png']
   # }
 
-  s.public_header_files = 'JCNetwork/Classes/JC{Network, NetworkDefine, NetworkResponse}.h'
+  s.public_header_files = 'JCNetwork/Classes/*.h'
 
   pch_JCNetwork      = <<-EOS
                         #import "AFNetworking.h"
@@ -45,6 +45,11 @@ Pod::Spec.new do |s|
                         EOS
 
   s.prefix_header_contents = pch_JCNetwork
+
+  s.subspec 'Products' do |ss|
+    ss.source_files = 'JCNetwork/Classes/Products/*'
+    ss.public_header_files = 'JCNetwork/Classes/Products/JC{Request, Responed}Obj.h'
+  end
 
   s.frameworks = 'UIKit'
   s.dependency 'AFNetworking'
