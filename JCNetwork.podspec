@@ -53,6 +53,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Handle' do |ss|
     ss.source_files = 'JCNetwork/Classes/Handle/*'
+    ss.private_header_files = 'JCNetwork/Classes/Handle/*.h'
 
     ss.dependency 'JCNetwork/Products'
   end
