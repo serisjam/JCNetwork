@@ -29,8 +29,8 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '7.0'
 
-  s.source_files = 'JCNetwork/Classes/JCNetwork.h'
-  s.public_header_files = 'JCNetwork/Classes/JCNetwork.h'
+  s.source_files = 'Pod/Classes/JCNetwork.h'
+  s.public_header_files = 'Pod/Classes/JCNetwork.h'
 
   pch_JCNetwork      = <<-EOS
                         #import "AFNetworking.h"
@@ -40,29 +40,29 @@ Pod::Spec.new do |s|
   s.prefix_header_contents = pch_JCNetwork
 
   s.subspec 'Define' do |ss|
-    ss.source_files = 'JCNetwork/Classes/Define/*'
-    ss.public_header_files = 'JCNetwork/Classes/Define/*.h'
+    ss.source_files = 'Pod/Classes/Define/*'
+    ss.public_header_files = 'Pod/Classes/Define/*.h'
   end
 
   s.subspec 'Products' do |ss|
-    ss.source_files = 'JCNetwork/Classes/Products/*'
-    ss.public_header_files = 'JCNetwork/Classes/Products/JC{Request,Responed}Obj.h'
+    ss.source_files = 'Pod/Classes/Products/*'
+    ss.public_header_files = 'Pod/Classes/Products/JC{Request,Responed}Obj.h'
 
     ss.dependency 'JCNetwork/Define'
   end
 
   s.subspec 'Handle' do |ss|
-    ss.source_files = 'JCNetwork/Classes/Handle/*'
-    ss.private_header_files = 'JCNetwork/Classes/Handle/*.h'
+    ss.source_files = 'Pod/Classes/Handle/*'
+    ss.private_header_files = 'Pod/Classes/Handle/*.h'
 
     ss.dependency 'JCNetwork/Products'
   end
 
   s.subspec 'Service' do |ss|
-    ss.source_files = 'JCNetwork/Classes/Service/*'
-    ss.public_header_files = 'JCNetwork/Classes/Service/JCRequestProxy.h'
+    ss.source_files = 'Pod/Classes/Service/*'
+    ss.public_header_files = 'Pod/Classes/Service/JCRequestProxy.h'
 
-    ss.dependency 'JCNetwork/Handle'
+    ss.dependency 'Pod/Handle'
   end
 
   s.frameworks = 'UIKit', 'ImageIO', 'Security', 'CFNetwork', 'SystemConfiguration'
