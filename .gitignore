@@ -33,3 +33,4 @@ Carthage
 # Pods/
 *.lock
 Example/Pods
+_Pods.xcodeproj
