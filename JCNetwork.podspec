@@ -62,7 +62,7 @@ Pod::Spec.new do |s|
     ss.source_files = 'Pod/Classes/Service/*'
     ss.public_header_files = 'Pod/Classes/Service/JCRequestProxy.h'
 
-    ss.dependency 'Pod/Handle'
+    ss.dependency 'JCNetwork/Handle'
   end
 
   s.frameworks = 'UIKit', 'ImageIO', 'Security', 'CFNetwork', 'SystemConfiguration'
