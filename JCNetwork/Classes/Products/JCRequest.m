@@ -71,6 +71,10 @@
     
     NSMutableString *urlString = [NSMutableString stringWithString:requestObj.hostName];
     
+    if ([urlString characterAtIndex:[urlString length]-1] == '/') {
+        urlString = [urlString substringToIndex:[urlString length]-1];
+    }
+    
     if(requestObj.path) {
         if(requestObj.path.length > 0 && [requestObj.path characterAtIndex:0] == '/')
             [urlString appendFormat:@"%@", requestObj.path];
