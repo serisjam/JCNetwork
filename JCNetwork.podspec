@@ -36,6 +36,7 @@ Pod::Spec.new do |s|
                         #import "AFNetworking.h"
                         #import "NSObject+YYModel.h"
                         #import "YYCache.h"
+                        #import "Aspects.h"
                        EOS
   s.prefix_header_contents = pch_JCNetwork
 
@@ -70,5 +71,6 @@ Pod::Spec.new do |s|
   s.dependency 'YYModel'
   s.dependency 'YYCache'
   s.dependency 'Aspects'
+  s.dependency 'SDWebImage'
 
 end

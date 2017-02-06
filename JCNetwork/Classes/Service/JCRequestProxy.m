@@ -9,6 +9,8 @@
 #import "JCRequester.h"
 #import "JCCacheResponedDispatcher.h"
 
+#import <objc/runtime.h>
+
 @interface JCRequestProxy () {
     JCRequester *_requester;
 }
@@ -45,12 +47,30 @@
     return [_requester httpGetWithRequest:requestObj entityClass:entityName withCompleteBlock:responedBlock];
 }
 
+- (JCRequestID)httpGetWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withControlObj:(NSObject *)controlObj withCompleteBlock:(JCNetworkResponseBlock)responedBlock {
+    
+    JCRequestID requestID = [self httpGetWithRequest:requestObj entityClass:entityName withCompleteBlock:responedBlock];
+    
+    if (controlObj) {
+        [self handleControlObj:controlObj withRequestID:requestID];
+    }
+}
+
 - (JCRequestID)httpPostWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withCompleteBlock:(JCNetworkResponseBlock)responedBlock {
     if (!requestObj || ![requestObj hostName]) {
         return JC_ERROR_REQUESTID;
     }
     
     return [_requester httpPostWithRequest:requestObj entityClass:entityName withCompleteBlock:responedBlock];
+}
+
+- (JCRequestID)httpPostWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withControlObj:(NSObject *)controlObj withCompleteBlock:(JCNetworkResponseBlock)responedBlock {
+    
+    JCRequestID requestID = [self httpPostWithRequest:requestObj entityClass:entityName withCompleteBlock:responedBlock];
+    
+    if (controlObj) {
+        [self handleControlObj:controlObj withRequestID:requestID];
+    }
 }
 
 - (JCRequestID)upLoadFileWithRequest:(JCRequestObj *)requestObj files:(NSDictionary *)files entityClass:(NSString *)entityName withUpLoadBlock:(JCNetworkResponseBlock)upLoadBlock {
@@ -130,6 +150,38 @@
 
 - (void)clearSave {
     [[JCCacheResponedDispatcher sharedInstance] clearn];
+}
+
+#pragma mark ControlObj
+
+- (void)handleControlObj:(NSObject *)controlObj withRequestID:(JCRequestID)requestID {
+    NSMutableArray *requstIdArrary = [self getAllRequestID:controlObj];
+    
+    if (!requstIdArrary) {
+        [self setAllRequestID:controlObj];
+        requstIdArrary = [self getAllRequestID:controlObj];
+        
+        SEL aSelector = NSSelectorFromString(@"dealloc");
+        __weak typeof(self) weakSelf = self;
+        [controlObj aspect_hookSelector:aSelector withOptions:AspectPositionBefore usingBlock:^(id<AspectInfo> aspectInfo){
+            NSMutableArray *requestArrary = [weakSelf getAllRequestID:aspectInfo.instance];
+            [requstIdArrary enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [weakSelf cancelRequestID:[obj integerValue]];
+            }];
+        } error:nil];
+    }
+    
+    [requstIdArrary addObject:[NSNumber numberWithInt:requestID]];
+}
+
+- (NSMutableArray *)getAllRequestID:(NSObject *)controlObj {
+    NSMutableArray *requstIdArrary = objc_getAssociatedObject(controlObj, 'allRequestID');
+    return requstIdArrary;
+}
+
+- (void)setAllRequestID:(NSObject *)controlObj {
+    NSMutableArray *requestArrary = [[NSMutableArray alloc] init];
+    objc_setAssociatedObject(controlObj, 'allRequestID', requestArrary, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

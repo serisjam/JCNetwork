@@ -22,8 +22,14 @@ typedef void(^JCNetworkImageFetch)(UIImage *fetchImage, BOOL isCache);
 // Get Request
 - (JCRequestID)httpGetWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withCompleteBlock:(JCNetworkResponseBlock)responedBlock;
 
+// Get Request with Control
+- (JCRequestID)httpGetWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withControlObj:(NSObject *)controlObj withCompleteBlock:(JCNetworkResponseBlock)responedBlock;
+
 //Post Request
 - (JCRequestID)httpPostWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withCompleteBlock:(JCNetworkResponseBlock)responedBlock;
+
+//Post Request with Control
+- (JCRequestID)httpPostWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withControlObj:(NSObject *)controlObj withCompleteBlock:(JCNetworkResponseBlock)responedBlock;
 
 //upload
 - (JCRequestID)upLoadFileWithRequest:(JCRequestObj *)requestObj files:(NSDictionary *)files entityClass:(NSString *)entityName withUpLoadBlock:(JCNetworkResponseBlock)responedBlock;
