@@ -56,6 +56,21 @@
     }
 }
 
+- (JCRequestID)httpGetWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withControlObj:(NSObject *)controlObj withSucessBlock:(void (^)(id content))sucessBlock andFailedBlock:(void (^)(NSError *error))failedBlock {
+    
+    JCRequestID requestID = [self httpGetWithRequest:requestObj entityClass:entityName withCompleteBlock:^(JCNetworkResponse *response) {
+        if (response.status == JCNetworkResponseStatusSuccess) {
+            sucessBlock(response.content);
+            return ;
+        }
+        failedBlock(response.error);
+    }];
+    
+    if (controlObj) {
+        [self handleControlObj:controlObj withRequestID:requestID];
+    }
+}
+
 - (JCRequestID)httpPostWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withCompleteBlock:(JCNetworkResponseBlock)responedBlock {
     if (!requestObj || ![requestObj hostName]) {
         return JC_ERROR_REQUESTID;
@@ -71,6 +86,22 @@
     if (controlObj) {
         [self handleControlObj:controlObj withRequestID:requestID];
     }
+}
+
+- (JCRequestID)httpPostWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withControlObj:(NSObject *)controlObj withSucessBlock:(void (^)(id content))sucessBlock andFailedBlock:(void (^)(NSError *error))failedBlock {
+    
+    JCRequestID requestID = [self httpPostWithRequest:requestObj entityClass:entityName withCompleteBlock:^(JCNetworkResponse *response) {
+        if (response.status == JCNetworkResponseStatusSuccess) {
+            sucessBlock(response.content);
+            return ;
+        }
+        failedBlock(response.error);
+    }];
+    
+    if (controlObj) {
+        [self handleControlObj:controlObj withRequestID:requestID];
+    }
+    
 }
 
 - (JCRequestID)upLoadFileWithRequest:(JCRequestObj *)requestObj files:(NSDictionary *)files entityClass:(NSString *)entityName withUpLoadBlock:(JCNetworkResponseBlock)upLoadBlock {
