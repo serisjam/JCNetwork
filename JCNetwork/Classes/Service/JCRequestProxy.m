@@ -54,6 +54,7 @@
     if (controlObj) {
         [self handleControlObj:controlObj withRequestID:requestID];
     }
+	return requestID;
 }
 
 - (JCRequestID)httpGetWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withControlObj:(NSObject *)controlObj withSucessBlock:(void (^)(id content))sucessBlock andFailedBlock:(void (^)(NSError *error))failedBlock {
@@ -69,6 +70,7 @@
     if (controlObj) {
         [self handleControlObj:controlObj withRequestID:requestID];
     }
+	return requestID;
 }
 
 - (JCRequestID)httpPostWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withCompleteBlock:(JCNetworkResponseBlock)responedBlock {
@@ -86,6 +88,7 @@
     if (controlObj) {
         [self handleControlObj:controlObj withRequestID:requestID];
     }
+	return requestID;
 }
 
 - (JCRequestID)httpPostWithRequest:(JCRequestObj *)requestObj entityClass:(NSString *)entityName withControlObj:(NSObject *)controlObj withSucessBlock:(void (^)(id content))sucessBlock andFailedBlock:(void (^)(NSError *error))failedBlock {
@@ -101,7 +104,7 @@
     if (controlObj) {
         [self handleControlObj:controlObj withRequestID:requestID];
     }
-    
+    return requestID;
 }
 
 - (JCRequestID)upLoadFileWithRequest:(JCRequestObj *)requestObj files:(NSDictionary *)files entityClass:(NSString *)entityName withUpLoadBlock:(JCNetworkResponseBlock)upLoadBlock {
